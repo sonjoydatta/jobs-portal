@@ -1,0 +1,15 @@
+$base-font-family: 'Source Sans Pro', sans-serif;
+$base-font-size: 16px;
+$primary: #1890ff;
+$primary-hover: #40a9ff;
+$primary-active: #096dd9;
+$secondary: #1ad743;
+$danger: #d87675;
+
+$colors: (
+	primary: $primary,
+	primary-hover: $primary-hover,
+	primary-active: $primary-active,
+	secondary: $secondary,
+	danger: $danger,
+);

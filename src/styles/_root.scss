@@ -1,0 +1,8 @@
+:root {
+	--base-font-family: #{$base-font-family};
+	--base-font-size: #{$base-font-size};
+
+	@each $color, $value in $colors {
+		--#{$color}: #{$value};
+	}
+}
