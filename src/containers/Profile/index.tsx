@@ -1,12 +1,14 @@
+import { Modal } from '@/components';
 import { Card } from '@/components/Card';
 import { profileStore, useProfileStore } from '@/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Experience } from './Experience';
 import { Header } from './Header';
 import { ProfileContainer } from './styles';
 
 export const Profile = () => {
 	const { experiences, ...rest } = useProfileStore();
+	const [isModal, setIsModal] = useState(false);
 
 	useEffect(() => {
 		profileStore.setState({
@@ -48,9 +50,12 @@ export const Profile = () => {
 	return (
 		<ProfileContainer>
 			<Card>
-				<Header {...rest} />
+				<Header {...rest} onEdit={() => setIsModal(true)} />
 			</Card>
 			<Experience items={experiences} />
+			<Modal isOpen={isModal} onClose={() => setIsModal(false)}>
+				ppppp
+			</Modal>
 		</ProfileContainer>
 	);
 };
