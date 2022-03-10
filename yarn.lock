@@ -676,6 +676,16 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@poly-state/poly-state@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@poly-state/poly-state/-/poly-state-1.1.4.tgz#7b8f71f088b5b30c7bb106007aa9bed8f871fb5a"
+  integrity sha512-QF4U8g7OWxb4NViTJ+Rotw7phE51l0CpM8JLJTFsS0eai8HRiUReW88HH+dj7e0qbnhaZmFig+BryrCi7ytOyw==
+
+"@poly-state/react@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@poly-state/react/-/react-1.2.3.tgz#fa22921c85c7921e5ca6df9ffdb4800df80a680d"
+  integrity sha512-Q/5GKfX5Xk38HvmsggPvZdv4Em/eTEH5ZWCoTP16cUU7zI983Ei6t5hWcd0qvWlRYNOAmoKMRLjc8fzeXC2Hww==
+
 "@rushstack/eslint-patch@^1.0.8":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.0.tgz#7f698254aadf921e48dda8c0a6b304026b8a9323"

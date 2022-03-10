@@ -12,4 +12,5 @@ export type {
 } from './@types';
 export * from './avatar';
 export * from './button';
+export * from './Card';
 export * from './Form';

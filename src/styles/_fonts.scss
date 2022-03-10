@@ -1,15 +1,23 @@
 @font-face {
-	font-family: 'Source Sans Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-	src: url('/assets/fonts/SourceSansPro-Regular.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'Source Sans Pro';
+	font-family: 'Plus Jakarta Sans';
 	font-style: normal;
 	font-weight: 600;
 	font-display: swap;
-	src: url('/assets/fonts/SourceSansPro-Semibold.woff2') format('woff2');
+	src: url('/assets/fonts/PlusJakartaSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'IBM Plex Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/assets/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'IBM Plex Sans';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/assets/fonts/IBMPlexSans-Bold.woff2') format('woff2');
 }

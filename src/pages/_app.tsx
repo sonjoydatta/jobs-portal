@@ -1,17 +1,16 @@
-import { defaultTheme } from '@/config/theme';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ThemeProvider } from 'styled-components';
+import { Fragment } from 'react';
 import '../styles/app.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<ThemeProvider theme={defaultTheme}>
+		<Fragment>
 			<Head>
 				<title>Glints Jobs Portal</title>
 			</Head>
 			<Component {...pageProps} />
-		</ThemeProvider>
+		</Fragment>
 	);
 }
 

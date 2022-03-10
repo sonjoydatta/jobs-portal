@@ -12,11 +12,11 @@ export const Button = styled.button<ButtonProps>`
 	border-style: solid;
 	cursor: pointer;
 	font-weight: ${({ textBold }) => (textBold ? '600' : '400')};
-	${({ theme, variant = 'primary' }) => {
+	${({ variant = 'primary' }) => {
 		switch (variant) {
 			case 'link':
 				return css`
-					color: ${theme.colors.primary};
+					color: var(--primary);
 					background-color: transparent;
 					border-color: transparent;
 					text-decoration: underline;
@@ -24,8 +24,8 @@ export const Button = styled.button<ButtonProps>`
 			default:
 				return css`
 					color: var(--white);
-					background-color: ${theme.colors[variant]};
-					border-color: ${theme.colors[variant]};
+					background-color: var(--${variant});
+					border-color: var(--${variant});
 					text-decoration: none;
 				`;
 		}
@@ -34,22 +34,22 @@ export const Button = styled.button<ButtonProps>`
 		switch (size) {
 			case 'sm':
 				return css`
-					padding: 7px 20px;
+					padding: 0.438rem 1.25rem;
 				`;
 			case 'lg':
 				return css`
-					font-size: 16px;
-					padding: 14px 20px;
+					font-size: 1rem;
+					padding: 0.875rem 1.25rem;
 				`;
 			default:
 				return css`
-					padding: 11px 20px;
+					padding: 0.688rem 1.25rem;
 				`;
 		}
 	}}
-  box-shadow: ${({ shadow }) => (shadow ? '0 8px 16px rgba(0,0,0,.15)' : 'none')};
-	border-radius: ${({ theme, rounded }) =>
-		rounded === 'circle' ? '50%' : rounded === 'pill' ? '50rem' : theme.border.radius};
+  box-shadow: ${({ shadow }) => (shadow ? '0 0.5rem 1rem rgba(0, 0, 0, 0.15)' : 'none')};
+	border-radius: ${({ rounded }) =>
+		rounded === 'circle' ? '50%' : rounded === 'pill' ? '50rem' : `var(--base-border-radius)`};
 	transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 	&:hover,
@@ -70,8 +70,8 @@ export const Button = styled.button<ButtonProps>`
 
 	&:disabled {
 		cursor: default;
-		${({ variant }) =>
-			variant === 'primary' || variant === undefined
+		${({ variant = 'primary' }) =>
+			variant === 'primary'
 				? css`
 						background-color: #d2d2d2;
 						border-color: #d2d2d2;

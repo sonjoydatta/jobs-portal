@@ -6,27 +6,27 @@ export const Avatar = styled.div<AvatarProps>`
 		switch (size) {
 			case 'sm':
 				return css`
-					width: 18px;
-					height: 18px;
-					line-height: 18px;
+					width: 1.125rem;
+					height: 1.125rem;
+					line-height: 1.125rem;
 				`;
 			case 'md':
 				return css`
-					width: 24px;
-					height: 24px;
-					line-height: 24px;
+					width: 1.5rem;
+					height: 1.5rem;
+					line-height: 1.5rem;
 				`;
 			case 'lg':
 				return css`
-					width: 48px;
-					height: 48px;
-					line-height: 48px;
+					width: 3rem;
+					height: 3rem;
+					line-height: 3rem;
 				`;
 			default:
 				return css`
-					width: 152px;
-					height: 152px;
-					line-height: 152px;
+					width: 7rem;
+					height: 7rem;
+					line-height: 7rem;
 				`;
 		}
 	}}
