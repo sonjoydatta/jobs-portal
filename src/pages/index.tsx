@@ -1,3 +1,5 @@
-const Home = () => <div>Hello world</div>;
+import { Profile } from '@/containers';
+
+const Home = () => <Profile />;
 
 export default Home;

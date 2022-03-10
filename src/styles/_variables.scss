@@ -1,10 +1,16 @@
 $base-font-family: 'Source Sans Pro', sans-serif;
 $base-font-size: 16px;
+
 $primary: #1890ff;
 $primary-hover: #40a9ff;
 $primary-active: #096dd9;
 $secondary: #1ad743;
 $danger: #d87675;
+$text: #4f4e4e;
+$drak: #121f3e;
+$white: #ffffff;
+$gray-100: #f9f9f9;
+$gray-200: #e9ecef;
 
 $colors: (
 	primary: $primary,
@@ -12,4 +18,9 @@ $colors: (
 	primary-active: $primary-active,
 	secondary: $secondary,
 	danger: $danger,
+	text: $text,
+	drak: $drak,
+	white: $white,
+	gray-100: $gray-100,
+	gray-200: $gray-200,
 );

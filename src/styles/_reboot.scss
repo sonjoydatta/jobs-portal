@@ -11,7 +11,8 @@ body {
 	font-family: $base-font-family;
 	font-size: $base-font-size;
 	font-weight: 400;
-	color: #4f4e4e;
+	color: $text;
+	background-color: $gray-200;
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -29,19 +30,24 @@ textarea {
 
 a {
 	text-decoration: underline;
-	color: #6400aa;
+	color: $primary;
+
+	&:hover {
+		text-decoration: none;
+		color: $primary-hover;
+	}
 }
 
 input,
 textarea {
-	background-color: #f9f9f9;
+	background-color: $gray-100;
 
 	&:focus {
 		outline: none;
 	}
 
 	&:disabled {
-		background-color: #e9ecef;
+		background-color: $gray-200;
 	}
 }
 
@@ -59,7 +65,7 @@ h6 {
 	margin-bottom: 8px;
 	font-weight: 600;
 	line-height: 1.2;
-	color: #121f3e;
+	color: $drak;
 }
 
 h1 {
