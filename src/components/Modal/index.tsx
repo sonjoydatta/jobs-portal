@@ -1,9 +1,11 @@
 import { useOnClickOutside } from '@/libs/hooks';
+import SolidSVG, { IconClose } from '@/libs/SolidSVG';
 import { FC, useEffect, useRef } from 'react';
-import { ModalProps } from '../@types';
-import { ModalWrapper } from './styles';
+import { ModalProperties, ModalProps } from '../@types';
+import { Button } from '../button';
+import { ModalBody, ModalFooter, ModalHeaderWrapper, ModalTitle, ModalWrapper } from './styles';
 
-export const Modal: FC<ModalProps> = ({ children, onClose, ...rest }) => {
+export const Modal: FC<ModalProps> & ModalProperties = ({ children, onClose, ...rest }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
 	useOnClickOutside(contentRef, () => onClose?.());
 
@@ -43,6 +45,18 @@ export const Modal: FC<ModalProps> = ({ children, onClose, ...rest }) => {
 	);
 };
 
-// Modal.Header = '';
-// Modal.Body = '';
-// Modal.Footer = '';
+const ModalHeader: FC<Pick<ModalProps, 'onClose'>> = ({ children, onClose }) => (
+	<ModalHeaderWrapper>
+		{children}
+		{onClose && (
+			<Button className='action-button' rounded='circle' variant='link' onClick={onClose}>
+				<SolidSVG path={IconClose} />
+			</Button>
+		)}
+	</ModalHeaderWrapper>
+);
+
+Modal.Header = ModalHeader;
+Modal.Title = ModalTitle;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;

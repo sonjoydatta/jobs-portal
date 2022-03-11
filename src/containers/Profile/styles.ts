@@ -1,4 +1,3 @@
-import { Card } from '@/components';
 import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
@@ -17,27 +16,6 @@ export const ProfileContainer = styled.div`
 
 		&:hover {
 			background-color: var(--gray-200);
-		}
-	}
-`;
-
-export const CardHeader = styled(Card.Header)`
-	.content {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		flex-grow: 1;
-		flex-direction: column;
-		align-items: flex-start;
-
-		&-title {
-			margin-top: 0.5rem;
-		}
-
-		&-subtitle {
-			font-size: 1rem;
-			font-weight: normal;
-			margin-bottom: 0.5rem;
 		}
 	}
 `;

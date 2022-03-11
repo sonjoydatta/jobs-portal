@@ -39,7 +39,7 @@ export const FormInput = styled.input<FormInputProps>`
 	display: block;
 	width: 100%;
 	height: auto;
-	padding: 1rem;
+	padding: 0.69rem 1rem;
 	border: 1px solid ${({ variant = 'primary' }) => `var(--${variant})`};
 	appearance: none;
 	border-radius: var(--base-border-radius);
