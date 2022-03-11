@@ -72,3 +72,9 @@ export const ListItem = styled.li`
 		}
 	}
 `;
+
+export const GridItems = styled.div`
+	display: grid;
+	gap: 0.625rem;
+	grid-template-columns: repeat(2, 1fr);
+`;

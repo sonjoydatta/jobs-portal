@@ -3,6 +3,7 @@ import {
 	InputHTMLAttributes,
 	LabelHTMLAttributes,
 	ReactNode,
+	SelectHTMLAttributes,
 	TextareaHTMLAttributes,
 } from 'react';
 import { Variant } from './index';
@@ -28,6 +29,10 @@ export type FormCheckProps = {
 export type FormTextareaProps = {
 	variant?: FormVariant;
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+export type FormSelectProps = {
+	variant?: FormVariant;
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
 export type FormMessageProps = {
 	message?: ReactNode;

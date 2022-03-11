@@ -14,11 +14,13 @@ export const Modal: FC<ModalProps> & ModalProperties = ({ children, onClose, ...
 		backdrop.classList.add('modal-backdrop');
 
 		const addBackdrop = () => {
+			document.body.classList.add('modal-open');
 			document.body.appendChild(backdrop);
 		};
 
 		const removeBackdrop = () => {
 			if (document.body.contains(backdrop)) {
+				document.body.classList.remove('modal-open');
 				document.body.removeChild(backdrop);
 			}
 		};

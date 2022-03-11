@@ -60,6 +60,7 @@ export const ModalTitle = styled.h5`
 export const ModalBody = styled.div`
 	padding: 1rem 1.5rem;
 	overflow-y: auto;
+	max-height: 30rem;
 `;
 
 export const ModalFooter = styled.div`

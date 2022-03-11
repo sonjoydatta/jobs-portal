@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from '@/components';
-import useForm from '@/libs/hooks/useForm';
+import { useForm } from '@/libs/hooks';
 import SolidSVG, { IconPencil } from '@/libs/SolidSVG';
 import { useProfileStore } from '@/store';
 import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
@@ -12,6 +12,12 @@ export const BasicInfoForm = memo(() => {
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
 	const handleModalClose = useCallback(() => setIsModalOpen(false), []);
+
+	const handleTriggerSubmit = useCallback(() => {
+		if (formRef.current) {
+			formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+		}
+	}, []);
 
 	const handleFormSubmit = (data: typeof initialValues) => {
 		console.log(data);
@@ -26,12 +32,6 @@ export const BasicInfoForm = memo(() => {
 	});
 
 	useEffect(() => setValues({ name, age }), [name, age, setValues]);
-
-	const handleTriggerSubmit = useCallback(() => {
-		if (formRef.current) {
-			formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-		}
-	}, []);
 
 	return (
 		<Fragment>
@@ -58,7 +58,7 @@ export const BasicInfoForm = memo(() => {
 								value: values.name,
 								onChange: handleChange,
 							}}
-							variant={errors.name ? 'danger' : 'primary'}
+							variant={errors.name ? 'danger' : undefined}
 							message={errors.name}
 						/>
 						<Form.Item
@@ -73,7 +73,7 @@ export const BasicInfoForm = memo(() => {
 								value: values.age,
 								onChange: handleChange,
 							}}
-							variant={errors.age ? 'danger' : 'primary'}
+							variant={errors.age ? 'danger' : undefined}
 							message={errors.age}
 						/>
 					</form>
