@@ -48,17 +48,3 @@ export const monthOptions = [
 		label: 'December',
 	},
 ];
-
-export const yearOptions = () => {
-	const years = [];
-	const currentYear = new Date().getFullYear();
-
-	for (let i = currentYear; i >= currentYear - 100; i--) {
-		years.push({
-			value: i,
-			label: i,
-		});
-	}
-
-	return years;
-};

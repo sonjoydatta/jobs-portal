@@ -54,3 +54,15 @@ export type FormItemCheckProps = {
 	inputProps?: Omit<FormCheckProps, 'variant'>;
 } & FormMessageProps &
 	HTMLAttributes<HTMLDivElement>;
+
+export type FormItemSelectProps = {
+	labelProps?: {
+		labelText?: string;
+	} & FormLabelProps;
+	selectProps?: Omit<FormSelectProps, 'variant'>;
+	options?: {
+		value: string | number;
+		label: string;
+	}[];
+} & FormMessageProps &
+	HTMLAttributes<HTMLDivElement>;

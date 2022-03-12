@@ -17,7 +17,7 @@ export const Profile = () => {
 			experiences: [
 				{
 					jobTitle: 'Software Engineer',
-					name: 'Strativ AB',
+					company: 'Strativ AB',
 					startDate: new Date('2021-10-01'),
 					logo: 'https://media-exp1.licdn.com/dms/image/C4D0BAQEFwMUolpORww/company-logo_100_100/0/1519920090100?e=1654732800&v=beta&t=nDTm5aNW0Q5M8G0chCGYIEuzqRbmCJdiWBA-728mqlo',
 					description:
@@ -25,7 +25,7 @@ export const Profile = () => {
 				},
 				{
 					jobTitle: 'Senior Frontend Developer',
-					name: 'Zaynax Limited',
+					company: 'Zaynax Limited',
 					startDate: new Date('2020-08-01'),
 					endDate: new Date('2021-09-01'),
 					logo: 'https://media-exp1.licdn.com/dms/image/C4E0BAQH8h13JAFsOxA/company-logo_100_100/0/1600235633061?e=1654732800&v=beta&t=N_7nNQjA_T5PM0-Czt-rGDlm0AVf5-eOACu0LALFObw',
@@ -34,7 +34,7 @@ export const Profile = () => {
 				},
 				{
 					jobTitle: 'Senior Frontend Developer',
-					name: 'Krazy IT',
+					company: 'Krazy IT',
 					startDate: new Date('2017-03-01'),
 					endDate: new Date('2020-07-01'),
 					logo: 'https://media-exp1.licdn.com/dms/image/C510BAQFgizoCWKaYYQ/company-logo_100_100/0/1572240068718?e=1654732800&v=beta&t=ZcIJkAzoP0es2BB8F9luxea5EFSkvG7qFgI30eaj50o',

@@ -1,5 +1,6 @@
-import { Profile } from '@/containers';
+import { UserSignIn } from '@/containers';
+import { NextPage } from 'next';
 
-const Home = () => <Profile />;
+const Home: NextPage = () => <UserSignIn />;
 
 export default Home;

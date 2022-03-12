@@ -1,13 +1,20 @@
 import { formatValidatorKey } from '@/utils/helpers';
 
 export const initialValues = {
-	name: '',
-	age: '',
+	jobTitle: '',
+	company: '',
+	startMonth: '',
+	startYear: '',
+	endMonth: '',
+	endYear: '',
+	description: '',
 };
 
 export const initialErrors = {
-	name: '',
-	age: '',
+	jobTitle: '',
+	company: '',
+	startMonth: '',
+	startYear: '',
 };
 
 export const validateForm = (
@@ -18,7 +25,9 @@ export const validateForm = (
 	if (values && Object.keys(values).length > 0) {
 		for (const key of Object.keys(values) as (keyof typeof initialValues)[]) {
 			if (key in initialErrors) {
-				errors[key] = !values[key] ? `${formatValidatorKey(key)} is required` : '';
+				errors[key as keyof typeof initialErrors] = !values[key]
+					? `${formatValidatorKey(key)} is required`
+					: '';
 			}
 		}
 	}

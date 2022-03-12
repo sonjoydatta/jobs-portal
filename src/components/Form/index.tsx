@@ -1,5 +1,6 @@
 import { FormItem } from './FormItem';
 import { FormItemCheck } from './FormItemCheck';
+import { FormItemSelect } from './FormItemSelect';
 import {
 	FormCheck,
 	FormGroup,
@@ -20,4 +21,5 @@ export const Form = {
 	Message: FormMessage,
 	Item: FormItem,
 	ItemCheck: FormItemCheck,
+	ItemSelect: FormItemSelect,
 };

@@ -5,15 +5,16 @@ import { ListItem } from './styles';
 
 export type OrganisationItemProps = {
 	jobTitle: string;
-	name: string;
+	company: string;
 	startDate: Date;
 	endDate?: Date;
 	logo: string;
 	description?: string;
+	onEdit?: () => void;
 };
 
 export const OrganisationItem: FC<OrganisationItemProps> = memo((props) => {
-	const { jobTitle, name, startDate, endDate, logo, description } = props;
+	const { jobTitle, company, startDate, endDate, logo, description, onEdit } = props;
 
 	const renderStartDate = useMemo(
 		() =>
@@ -38,16 +39,16 @@ export const OrganisationItem: FC<OrganisationItemProps> = memo((props) => {
 	return (
 		<ListItem>
 			<Avatar size='lg'>
-				<img src={logo} alt={name} />
+				<img src={logo} alt={company} />
 			</Avatar>
 			<div className='organisation-info'>
 				<h2 className='organisation-info__title'>{jobTitle}</h2>
-				<p className='organisation-info__name'>{name}</p>
+				<p className='organisation-info__name'>{company}</p>
 				<p className='organisation-info__date'>
 					{renderStartDate} - {renderEndDate}
 				</p>
 				{description && <p className='organisation-info__description'>{description}</p>}
-				<Button className='action-button' rounded='circle' variant='link'>
+				<Button className='action-button' rounded='circle' variant='link' onClick={onEdit}>
 					<SolidSVG path={IconPencil} />
 				</Button>
 			</div>
