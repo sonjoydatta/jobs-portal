@@ -7,7 +7,7 @@ import {
 	InvalidMethodException,
 } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserWithJWT } from './signin';
+import { getUserWithJWT } from './login';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {

@@ -1,4 +1,5 @@
-import { ProfileEntity } from '@/database/models/profile';
+import config from '@/config';
+import { ProfileEntity } from '@/database/models';
 import { authStore } from '@/store/auth.store';
 import { HttpService } from './http.service';
 
@@ -10,7 +11,7 @@ class ProfileService {
 	}
 }
 
-const privateHttpInstance = new HttpService('http://localhost:3000', {
+const privateHttpInstance = new HttpService(config.apiURL!, {
 	getToken: () => authStore.getState().accessToken,
 	onUnauthorized: () => {
 		authStore.setState({ accessToken: '', isLoggedIn: false, id: '' });

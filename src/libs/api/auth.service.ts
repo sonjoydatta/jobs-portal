@@ -1,13 +1,18 @@
+import config from '@/config';
+import { AuthResponse, LoginPayload, RegisterPayload } from './@types';
 import { HttpService } from './http.service';
 
 class AuthService {
 	constructor(private http: HttpService) {}
 
-	login(email: string, password: string) {
-		return this.http.post<string>('/api/auth/login', { email, password });
+	login(payload: LoginPayload) {
+		return this.http.post<AuthResponse>('auth/login', payload);
+	}
+
+	register(payload: RegisterPayload) {
+		return this.http.post<AuthResponse>('auth/register', payload);
 	}
 }
 
-const publicHttpInstance = new HttpService('http://localhost:3000');
-
-export const authService = new AuthService(publicHttpInstance);
+const httpInstance = new HttpService(config.apiURL!);
+export const authService = new AuthService(httpInstance);

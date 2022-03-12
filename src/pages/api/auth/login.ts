@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const data = await getUserWithJWT(user);
 
-		res.status(200).json({ data });
+		res.status(200).json({ success: true, data });
 	} catch (error) {
 		handleApiErrors(error, res);
 	}

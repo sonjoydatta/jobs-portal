@@ -1,17 +1,22 @@
-import { createStore } from '@poly-state/poly-state';
+import { createStore, withDevTools } from '@poly-state/poly-state';
 import { createStoreHooks } from '@poly-state/react';
 
 export type AuthStore = {
 	isLoggedIn: boolean;
-	accessToken: string;
-	id: string;
-};
+} & IAPI.AuthResponse;
 
 const authStoreInitialProps: AuthStore = {
 	isLoggedIn: false,
-	accessToken: '',
-	id: '',
+	token: '',
+	user: {
+		id: '',
+		name: '',
+		age: '',
+		email: '',
+		avatar: '',
+	},
 };
 
 export const authStore = createStore(authStoreInitialProps);
+withDevTools(authStore, 'Auth');
 export const [useAuthStore, useAuthStoreSeletor] = createStoreHooks(authStore);

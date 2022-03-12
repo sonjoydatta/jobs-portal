@@ -2,7 +2,7 @@ type RequestOptions = {
 	headers: Record<string, string>;
 };
 
-type HttpResponse<T> = { data: T; error: null } | { error: string };
+export type HttpResponse<T> = { data: T; success: true } | { error: string; success: false };
 
 type HttpServiceConfig = {
 	getToken?: () => string | null;
@@ -37,24 +37,22 @@ export class HttpService {
 		url: string,
 		options?: RequestInit
 	): Promise<HttpResponse<T>> {
+		// Generate request URL with base URL and URL path
 		const requestURL = `${this.baseURL}/${url}`;
 
 		try {
 			const response = await fetch(requestURL, {
-				method,
 				headers: {
 					'content-type': 'application/json',
 					...options?.headers,
 					Authorization: this.config.getToken?.() || '',
 				},
+				body: options?.body,
+				method,
 			});
 
-			if (response.ok) {
-				return { data: (await response.json()) as T, error: null };
-			}
-			if (response.status === 401) {
-				this.config.onUnauthorized?.();
-			}
+			if (response.ok) return await response.json();
+			if (response.status === 401) this.config.onUnauthorized?.();
 
 			const res = await response.json().catch(() => ({
 				error: 'Something went wrong',
@@ -63,9 +61,9 @@ export class HttpService {
 			throw new Error(res.error);
 		} catch (error) {
 			if (error instanceof Error) {
-				return { error: error?.message };
+				return { error: error?.message, success: false };
 			}
-			return { error: 'Something Went Wrong' };
+			return { error: 'Something Went Wrong', success: false };
 		}
 	}
 }
