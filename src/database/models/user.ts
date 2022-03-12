@@ -26,4 +26,13 @@ export class UserModel {
 		const { insertedId } = await this.collection.insertOne(user);
 		return { ...user, _id: insertedId };
 	}
+
+	async update(id: string, profile: Partial<UserEntity>) {
+		const doc = await this.collection.findOneAndUpdate(
+			{ _id: new ObjectID(id) },
+			{ $set: profile }
+		);
+
+		return doc.value;
+	}
 }

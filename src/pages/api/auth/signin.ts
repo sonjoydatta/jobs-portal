@@ -1,5 +1,5 @@
 import { getModel } from '@/database';
-import { UserModel } from '@/database/models';
+import { UserEntity, UserModel } from '@/database/models';
 import { signJWT } from '@/utils/auth/jwt';
 import { comparePassword } from '@/utils/auth/password';
 import {
@@ -7,7 +7,21 @@ import {
 	handleApiErrors,
 	InvalidMethodException,
 } from '@/utils/httpException';
+import { WithId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+export const getUserWithJWT = async (user: WithId<UserEntity>) => {
+	const token = await signJWT({ id: user._id.toString() });
+	return {
+		token,
+		user: {
+			id: user._id.toString(),
+			name: user.name,
+			age: user.age,
+			email: user.email,
+		},
+	};
+};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
@@ -34,20 +48,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			throw new BadRequestException('Password is invalid');
 		}
 
-		const signedJWT = await signJWT({ id: user._id.toString() });
-		const data = {
-			token: signedJWT,
-			user: {
-				id: user._id.toString(),
-				name: user.name,
-				age: user.age,
-				email: user.email,
-			},
-		};
+		const data = await getUserWithJWT(user);
 
-		return res.status(200).json({ data });
+		res.status(200).json({ data });
 	} catch (error) {
-		return handleApiErrors(error, res);
+		handleApiErrors(error, res);
 	}
 };
 

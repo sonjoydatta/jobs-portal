@@ -34,12 +34,12 @@ export class InvalidMethodException extends HttpException {
 
 export const handleApiErrors = (error: unknown, res: NextApiResponse<HttpResponse<unknown>>) => {
 	if (error instanceof HttpException) {
-		return res.status(error.status).json({ error: error.message });
+		res.status(error.status).json({ error: error.message });
 	}
 
 	if (error instanceof Error) {
-		return res.status(500).json({ error: error.message });
+		res.status(500).json({ error: error.message });
 	}
 
-	return res.status(500).json({ error: 'Unknown error' });
+	res.status(500).json({ error: 'Unknown error' });
 };

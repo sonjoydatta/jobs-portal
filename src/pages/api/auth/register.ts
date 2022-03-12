@@ -1,6 +1,5 @@
 import { getModel } from '@/database';
 import { UserModel } from '@/database/models';
-import { signJWT } from '@/utils/auth/jwt';
 import { encryptPassword } from '@/utils/auth/password';
 import {
 	BadRequestException,
@@ -8,6 +7,7 @@ import {
 	InvalidMethodException,
 } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getUserWithJWT } from './signin';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
@@ -48,20 +48,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			throw new BadRequestException('Something went wrong');
 		}
 
-		const signedJWT = await signJWT({ id: newUser._id.toString() });
-		const data = {
-			token: signedJWT,
-			user: {
-				id: newUser._id.toString(),
-				name: newUser.name,
-				age: newUser.age,
-				email: newUser.email,
-			},
-		};
+		const data = await getUserWithJWT(newUser);
 
-		return res.status(200).json({ data });
+		res.status(200).json({ data });
 	} catch (error) {
-		return handleApiErrors(error, res);
+		handleApiErrors(error, res);
 	}
 };
 
