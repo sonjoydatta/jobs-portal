@@ -1,13 +1,17 @@
 import { Button, Form, Modal } from '@/components';
+import { profileService } from '@/libs/api';
 import { useForm } from '@/libs/hooks';
 import SolidSVG, { IconPencil } from '@/libs/SolidSVG';
-import { useProfileStore } from '@/store';
+import { profileStore, useProfileStore } from '@/store';
 import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const BasicInfoForm = memo(() => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { name, age } = useProfileStore();
+	const {
+		user: { name, age },
+	} = useProfileStore();
+
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
@@ -19,9 +23,14 @@ export const BasicInfoForm = memo(() => {
 		}
 	}, []);
 
-	const handleFormSubmit = (data: typeof initialValues) => {
-		console.log(data);
-		handleModalClose();
+	const handleFormSubmit = async (data: typeof initialValues) => {
+		if (data) {
+			const res = await profileService.updateProfile(data);
+			if (res.success) {
+				profileStore.setUser((prev) => ({ ...prev, ...res.data }));
+				handleModalClose();
+			}
+		}
 	};
 
 	const { values, setValues, errors, handleChange, handleSubmit } = useForm({

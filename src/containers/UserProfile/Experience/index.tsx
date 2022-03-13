@@ -2,9 +2,9 @@ import { Button, Card } from '@/components';
 import SolidSVG, { IconPlus } from '@/libs/SolidSVG';
 import { FC, memo, useCallback, useState } from 'react';
 import { OrganisationForm } from './OrganisationForm';
-import { Organisations, OrganisationsProps } from './Organisations';
+import { Organisations } from './Organisations';
 
-export const Experience: FC<OrganisationsProps> = memo(({ items }) => {
+export const Experience: FC = memo(() => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
@@ -27,7 +27,7 @@ export const Experience: FC<OrganisationsProps> = memo(({ items }) => {
 					onClose={handleModalClose}
 				/>
 			</Card.Header>
-			<Organisations items={items} />
+			<Organisations />
 		</Card>
 	);
 });

@@ -12,15 +12,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export const getUserWithJWT = async (user: WithId<UserEntity>) => {
 	const token = await signJWT({ id: user._id.toString() });
-	return {
-		token,
-		user: {
-			id: user._id.toString(),
-			name: user.name,
-			age: user.age,
-			email: user.email,
-		},
-	};
+	return { token };
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -3,18 +3,12 @@ import { createStoreHooks } from '@poly-state/react';
 
 export type AuthStore = {
 	isLoggedIn: boolean;
-} & IAPI.AuthResponse;
+	accessToken: string;
+};
 
 const authStoreInitialProps: AuthStore = {
 	isLoggedIn: false,
-	token: '',
-	user: {
-		id: '',
-		name: '',
-		age: '',
-		email: '',
-		avatar: '',
-	},
+	accessToken: '',
 };
 
 export const authStore = createStore(authStoreInitialProps);

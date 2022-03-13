@@ -6,7 +6,4 @@ export type RegisterPayload = Omit<UserEntity, 'avatar'>;
 
 export type AuthResponse = {
 	token: string;
-	user: {
-		id: string;
-	} & Omit<UserEntity, 'password'>;
 };

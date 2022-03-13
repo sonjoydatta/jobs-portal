@@ -1,50 +1,50 @@
 export const monthOptions = [
 	{
-		value: '1',
+		value: 'Jan',
 		label: 'January',
 	},
 	{
-		value: '2',
+		value: 'Feb',
 		label: 'February',
 	},
 	{
-		value: '3',
+		value: 'Mar',
 		label: 'March',
 	},
 	{
-		value: '4',
+		value: 'Apr',
 		label: 'April',
 	},
 	{
-		value: '5',
+		value: 'May',
 		label: 'May',
 	},
 	{
-		value: '6',
+		value: 'Jun',
 		label: 'June',
 	},
 	{
-		value: '7',
+		value: 'Jul',
 		label: 'July',
 	},
 	{
-		value: '8',
+		value: 'Aug',
 		label: 'August',
 	},
 	{
-		value: '9',
+		value: 'Sep',
 		label: 'September',
 	},
 	{
-		value: '10',
+		value: 'Oct',
 		label: 'October',
 	},
 	{
-		value: '11',
+		value: 'Nov',
 		label: 'November',
 	},
 	{
-		value: '12',
+		value: 'Dec',
 		label: 'December',
 	},
 ];

@@ -1,17 +1,18 @@
 import { formatValidatorKey } from '@/utils/helpers';
 
 export const initialValues = {
-	jobTitle: '',
+	title: '',
 	company: '',
 	startMonth: '',
 	startYear: '',
 	endMonth: '',
 	endYear: '',
+	isCurrent: false,
 	description: '',
 };
 
 export const initialErrors = {
-	jobTitle: '',
+	title: '',
 	company: '',
 	startMonth: '',
 	startYear: '',

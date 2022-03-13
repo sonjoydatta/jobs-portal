@@ -1,2 +1,2 @@
-export * from './Profile';
+export * from './UserProfile';
 export * from './UserSignIn';

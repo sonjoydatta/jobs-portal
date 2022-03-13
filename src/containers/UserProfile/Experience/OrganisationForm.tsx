@@ -2,20 +2,20 @@ import { Button, Form, Modal, ModalProps } from '@/components';
 import { useForm } from '@/libs/hooks';
 import { monthOptions } from '@/utils/constants';
 import { yearOptions } from '@/utils/helpers';
-import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { convertToPayload, convertToValues } from './helpers';
 import { GridItems } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 type OrganisationFormProps = ModalProps & {
-	defaultValues?: typeof initialValues;
-	onSubmit: (data: typeof initialValues) => void;
+	defaultValues?: IAPI.ExperienceResponce;
+	onSubmit: (data: Omit<IAPI.ExperienceResponce, '_id' | 'userId'>) => void;
 };
 
 export const OrganisationForm: FC<OrganisationFormProps> = memo(
 	({ isOpen, onClose, defaultValues, onSubmit }) => {
 		const modalProps = { isOpen, onClose };
 		const formRef = useRef<HTMLFormElement>(null);
-		const [isChecked, setIsChecked] = useState(true);
 
 		const handleTriggerSubmit = useCallback(() => {
 			if (formRef.current) {
@@ -23,37 +23,19 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 			}
 		}, []);
 
-		const { values, setValues, setErrors, errors, handleChange, handleSubmit } = useForm({
+		const { values, setValues, errors, handleChange, handleSubmit } = useForm({
 			initialValues,
 			initialErrors,
-			onSuccess: onSubmit,
+			onSuccess: (data) => onSubmit(convertToPayload(data)),
 			validate: validateForm,
 		});
 
 		useEffect(() => {
 			if (defaultValues) {
-				setValues(defaultValues);
-				if (defaultValues.endMonth && defaultValues.endYear) {
-					setIsChecked(false);
-				} else {
-					setIsChecked(true);
-				}
+				const parsedValues = convertToValues(defaultValues);
+				setValues(parsedValues);
 			}
 		}, [defaultValues, setValues]);
-
-		const handleIsCurrentChange = useCallback(() => {
-			setIsChecked((prev) => !prev);
-			setValues((prev) => ({
-				...prev,
-				endMonth: '',
-				endYear: '',
-			}));
-			setErrors((prev) => ({
-				...prev,
-				endMonth: '',
-				endYear: '',
-			}));
-		}, [setErrors, setValues]);
 
 		const selectYearOption = useMemo(() => yearOptions(), []);
 
@@ -67,17 +49,17 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 						<Form.Item
 							labelProps={{
 								labelText: 'Job title',
-								htmlFor: 'jobTitle',
+								htmlFor: 'title',
 							}}
 							inputProps={{
 								type: 'text',
-								name: 'jobTitle',
+								name: 'title',
 								placeholder: 'Ex: Software Engineer',
-								value: values.jobTitle,
+								value: values.title,
 								onChange: handleChange,
 							}}
-							variant={errors.jobTitle ? 'danger' : undefined}
-							message={errors.jobTitle}
+							variant={errors.title ? 'danger' : undefined}
+							message={errors.title}
 						/>
 						<Form.Item
 							labelProps={{
@@ -102,8 +84,9 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 							inputProps={{
 								type: 'checkbox',
 								id: 'isCurrent',
-								checked: isChecked,
-								onChange: handleIsCurrentChange,
+								name: 'isCurrent',
+								checked: values.isCurrent,
+								onChange: handleChange,
 							}}
 						/>
 						<GridItems>
@@ -120,7 +103,7 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 							/>
 							<Form.ItemSelect
 								labelProps={{
-									labelText: `Start year`,
+									labelText: 'Start year',
 								}}
 								selectProps={{
 									name: 'startYear',
@@ -139,7 +122,7 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 									name: 'endMonth',
 									value: values.endMonth,
 									onChange: handleChange,
-									disabled: isChecked,
+									disabled: values.isCurrent,
 								}}
 								options={monthOptions}
 							/>
@@ -151,7 +134,7 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 									name: 'endYear',
 									value: values.endYear,
 									onChange: handleChange,
-									disabled: isChecked,
+									disabled: values.isCurrent,
 								}}
 								options={selectYearOption}
 							/>

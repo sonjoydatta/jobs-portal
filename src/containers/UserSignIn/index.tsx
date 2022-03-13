@@ -2,16 +2,25 @@ import { Button, Card, Form } from '@/components';
 import { authService } from '@/libs/api';
 import { useForm } from '@/libs/hooks';
 import { authStore } from '@/store';
+import { useRouter } from 'next/router';
+import { setCookie } from 'nookies';
 import { SignInContainer } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const UserSignIn = () => {
+	const router = useRouter();
+
 	const handleFormSubmit = async (payload: IAPI.LoginPayload) => {
 		if (payload) {
 			const res = await authService.login(payload);
 			if (res.success) {
-				const { token, user } = res.data;
-				authStore.setState((state) => ({ ...state, isLoggedIn: true, token, user }));
+				const { token } = res.data;
+				setCookie(null, 'token', token, {
+					maxAge: 7 * 24 * 60 * 60,
+					path: '/',
+				});
+				authStore.setState({ isLoggedIn: true, accessToken: token });
+				router.push('/dashboard/profile');
 			}
 		}
 	};

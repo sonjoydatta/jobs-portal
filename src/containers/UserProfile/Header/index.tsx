@@ -1,16 +1,14 @@
 import { Avatar, Card } from '@/components';
+import { useProfileStore } from '@/store';
 import { ChangeEvent, FC, memo, useCallback, useRef } from 'react';
 import { BasicInfoForm } from './BasicInfoForm';
 import { CardHeader } from './styles';
 
-type HeaderProps = {
-	imageURL: string;
-	name: string;
-	age: string;
-};
-
-export const Header: FC<HeaderProps> = memo(({ name, imageURL, age }) => {
+export const Header: FC = memo(() => {
 	const inputRef = useRef<HTMLInputElement>(null);
+	const {
+		user: { name, age, avatar },
+	} = useProfileStore();
 
 	const handleTriggerAvatarClick = useCallback(() => {
 		if (inputRef.current) {
@@ -27,7 +25,7 @@ export const Header: FC<HeaderProps> = memo(({ name, imageURL, age }) => {
 		<CardHeader>
 			<div className='content'>
 				<Avatar className='content-avatar' size='xl' onClick={handleTriggerAvatarClick}>
-					<img src={imageURL} alt={name} />
+					<img src={avatar} alt={name} />
 					<input
 						ref={inputRef}
 						type='file'

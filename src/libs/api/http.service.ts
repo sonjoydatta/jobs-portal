@@ -32,6 +32,10 @@ export class HttpService {
 		return this.request<T>('PATCH', url, { ...options, body: JSON.stringify(body) });
 	}
 
+	upload<T>(url: string, body: FormData, options?: RequestInit) {
+		return this.request<T>('POST', url, { ...options, body });
+	}
+
 	private async request<T>(
 		method: string,
 		url: string,

@@ -1,4 +1,4 @@
-import config from '@/config';
+import { client } from '@/config/client';
 import { AuthResponse, LoginPayload, RegisterPayload } from './@types';
 import { HttpService } from './http.service';
 
@@ -14,5 +14,5 @@ class AuthService {
 	}
 }
 
-const httpInstance = new HttpService(config.apiURL!);
+const httpInstance = new HttpService(client.apiURL!);
 export const authService = new AuthService(httpInstance);
