@@ -19,10 +19,11 @@ import { initialErrors, initialValues, validateForm } from './validations';
 type OrganisationFormProps = ModalProps & {
 	defaultValues?: IAPI.ExperienceResponce;
 	onSubmit: (data: IAPI.ExperiencePayload) => void;
+	isLoading: boolean;
 };
 
 export const OrganisationForm: FC<OrganisationFormProps> = memo(
-	({ isOpen, onClose, defaultValues, onSubmit }) => {
+	({ isOpen, onClose, defaultValues, onSubmit, isLoading }) => {
 		const modalProps = { isOpen, onClose };
 		const formRef = useRef<HTMLFormElement>(null);
 		const [avatar, setAvatar] = useState<string>();
@@ -205,8 +206,9 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 						rounded='pill'
 						size='sm'
 						onClick={handleTriggerSubmit}
+						disabled={isLoading}
 					>
-						Save
+						{isLoading ? 'Loading...' : 'Save'}
 					</Button>
 				</Modal.Footer>
 			</Modal>

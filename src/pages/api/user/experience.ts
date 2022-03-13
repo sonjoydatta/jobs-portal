@@ -1,6 +1,7 @@
 import { getModel } from '@/database';
 import { ExperienceEntity, ExperienceModel } from '@/database/models';
 import { getJWTId } from '@/utils/auth/jwt';
+import { sortByDate } from '@/utils/helpers';
 import { BadRequestException, handleApiErrors } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -60,8 +61,9 @@ const handlerGet = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const model = await getModel(ExperienceModel);
 	const experiences = await model.findAllByUserId(id);
+	const data = experiences.sort((a, b) => sortByDate(b.to, a.to));
 
-	res.status(200).json({ success: true, data: experiences });
+	res.status(200).json({ success: true, data });
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

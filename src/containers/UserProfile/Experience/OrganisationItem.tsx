@@ -1,7 +1,9 @@
 import { Avatar, Button } from '@/components';
 import SolidSVG, { IconPencil } from '@/libs/SolidSVG';
 import { useProfileStore } from '@/store';
-import { FC, memo } from 'react';
+import { defaultTextAvatar } from '@/utils/helpers';
+import { FC, memo, useMemo } from 'react';
+import { InitialsAvatar } from '../styles';
 import { ListItem } from './styles';
 
 export type OrganisationItemProps = {
@@ -13,11 +15,19 @@ export const OrganisationItem: FC<OrganisationItemProps> = memo((props) => {
 		props;
 	const { isEditable } = useProfileStore();
 
+	const imageComponent = useMemo(() => {
+		if (avatar?.includes('http')) return <img src={avatar} alt={company} />;
+
+		return (
+			<InitialsAvatar size='sm' name={company}>
+				{defaultTextAvatar(company)}
+			</InitialsAvatar>
+		);
+	}, [avatar, company]);
+
 	return (
 		<ListItem>
-			<Avatar size='lg'>
-				<img src={avatar} alt={company} />
-			</Avatar>
+			<Avatar size='lg'>{imageComponent}</Avatar>
 			<div className='organisation-info'>
 				<h2 className='organisation-info__title'>{title}</h2>
 				<p className='organisation-info__name'>{company}</p>

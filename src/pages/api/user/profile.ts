@@ -5,7 +5,7 @@ import { getJWTId } from '@/utils/auth/jwt';
 import {
 	BadRequestException,
 	handleApiErrors,
-	UnauthorizedException,
+	NotFoundException,
 } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -31,7 +31,7 @@ const handlerUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const model = await getModel(UserModel);
 	const user = await model.update(id, payload);
-	if (!user) throw new UnauthorizedException('User not found');
+	if (!user) throw new NotFoundException('User not found');
 	const { password, ...data } = user;
 
 	res.status(200).json({ success: true, data });

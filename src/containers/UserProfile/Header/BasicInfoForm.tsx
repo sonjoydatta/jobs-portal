@@ -15,11 +15,11 @@ import { initialErrors, initialValues, validateForm } from './validations';
 
 export const BasicInfoForm = memo(() => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const {
 		user: { name, age },
 		isEditable,
 	} = useProfileStore();
-
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
@@ -35,11 +35,13 @@ export const BasicInfoForm = memo(() => {
 
 	const handleFormSubmit = async (data: typeof initialValues) => {
 		if (data) {
+			setIsLoading(true);
 			const res = await profileService.updateProfile(data);
 			if (res.success) {
 				profileStore.setUser((prev) => ({ ...prev, ...res.data }));
 				handleModalClose();
 			}
+			setIsLoading(false);
 		}
 	};
 
@@ -111,8 +113,9 @@ export const BasicInfoForm = memo(() => {
 						rounded='pill'
 						size='sm'
 						onClick={handleTriggerSubmit}
+						disabled={isLoading}
 					>
-						Save changes
+						{isLoading ? 'Loading...' : 'Save changes'}
 					</Button>
 				</Modal.Footer>
 			</Modal>

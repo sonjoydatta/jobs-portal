@@ -1,7 +1,9 @@
 import { Avatar, Card } from '@/components';
 import { profileService } from '@/libs/api';
 import { profileStore, useProfileStore } from '@/store';
-import { ChangeEvent, FC, memo, useCallback, useRef } from 'react';
+import { defaultTextAvatar } from '@/utils/helpers';
+import { ChangeEvent, FC, memo, useCallback, useMemo, useRef } from 'react';
+import { InitialsAvatar } from '../styles';
 import { BasicInfoForm } from './BasicInfoForm';
 import { PublicButton } from './PublicButton';
 import { CardHeader } from './styles';
@@ -10,6 +12,7 @@ export const Header: FC = memo(() => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const {
 		user: { name, age, avatar },
+		isEditable,
 	} = useProfileStore();
 
 	const handleTriggerAvatarClick = useCallback(() => {
@@ -33,21 +36,31 @@ export const Header: FC = memo(() => {
 		[]
 	);
 
+	const imageComponent = useMemo(() => {
+		if (avatar?.includes('http')) return <img src={avatar} alt={name} />;
+
+		return (
+			<InitialsAvatar name={name}>{defaultTextAvatar(name)}</InitialsAvatar>
+		);
+	}, [avatar, name]);
+
 	return (
 		<CardHeader style={{ position: 'relative' }}>
 			<div className='content'>
 				<Avatar
-					className='content-avatar'
+					className={isEditable ? 'content-avatar' : ''}
 					size='xl'
 					onClick={handleTriggerAvatarClick}
 				>
-					<img src={avatar} alt={name} />
-					<input
-						ref={inputRef}
-						type='file'
-						style={{ display: 'none' }}
-						onChange={handleUploadAvatar}
-					/>
+					{imageComponent}
+					{isEditable && (
+						<input
+							ref={inputRef}
+							type='file'
+							style={{ display: 'none' }}
+							onChange={handleUploadAvatar}
+						/>
+					)}
 				</Avatar>
 				<Card.Title className='content-title'>{name}</Card.Title>
 				<p className='content-subtitle'>Age: {age}</p>

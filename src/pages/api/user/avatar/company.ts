@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		if (req.method !== 'POST')
 			throw new BadRequestException('Method not allowed');
 
-		const id = await getJWTId(req);
+		await getJWTId(req);
 
 		const fileParts: any[] = [];
 

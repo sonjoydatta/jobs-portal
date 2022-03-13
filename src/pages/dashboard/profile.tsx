@@ -7,13 +7,14 @@ import { NextPage } from 'next';
 const Profile: NextPage = () => <UserProfile />;
 
 Profile.getInitialProps = async () => {
-	const res = await profileService.getProfile();
-	console.log(res);
-	if (res.success) {
-		profileStore.setUser((prev) => ({ ...prev, ...res.data }));
+	const promise1 = profileService.getProfile();
+	const promise2 = profileService.getExperiences();
+	const [res1, res2] = await Promise.all([promise1, promise2]);
+
+	if (res1.success) {
+		profileStore.setUser((prev) => ({ ...prev, ...res1.data }));
 	}
 
-	const res2 = await profileService.getExperiences();
 	if (res2.success) {
 		profileStore.setExperiences(res2.data);
 	}

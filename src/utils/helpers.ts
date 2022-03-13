@@ -29,3 +29,17 @@ export const yearOptions = () => {
 
 	return years;
 };
+
+export const defaultTextAvatar = (name: string) => {
+	const initials = name
+		.split(' ')
+		.splice(0, 2)
+		.map((word) => word.charAt(0))
+		.join('')
+		.toUpperCase();
+
+	return initials.toUpperCase();
+};
+
+export const sortByDate = (a?: string, b?: string) =>
+	new Date(a || new Date()).getTime() - new Date(b || new Date()).getTime();

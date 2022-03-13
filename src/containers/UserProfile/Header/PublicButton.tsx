@@ -20,7 +20,7 @@ export const PublicButton: FC = () => {
 	const handleClick = async () => {
 		const res = await profileService.updateProfile({ isPublic: !isPublic });
 		if (res.success) {
-			profileStore.setUser(res.data);
+			profileStore.setUser((prev) => ({ ...prev, ...res.data }));
 		}
 	};
 

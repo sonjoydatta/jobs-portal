@@ -13,11 +13,13 @@ export type OrganisationsProps = {
 
 export const Organisations: FC = memo(() => {
 	const [selectedItem, setSelectedItem] = useState<IAPI.ExperienceResponce>();
+	const [isLoading, setIsLoading] = useState(false);
 	const { experiences } = useProfileStore();
 
 	const handleUpdate = useCallback(
 		async (item: Omit<IAPI.ExperienceResponce, '_id' | 'userId'>) => {
 			if (selectedItem?._id && item) {
+				setIsLoading(true);
 				const res = await profileService.updateExperience(
 					selectedItem._id,
 					item
@@ -30,6 +32,7 @@ export const Organisations: FC = memo(() => {
 					});
 					setSelectedItem(undefined);
 				}
+				setIsLoading(false);
 			}
 		},
 		[selectedItem?._id]
@@ -49,6 +52,7 @@ export const Organisations: FC = memo(() => {
 				defaultValues={selectedItem}
 				onSubmit={handleUpdate}
 				onClose={() => setSelectedItem(undefined)}
+				isLoading={isLoading}
 			/>
 		</Wrapper>
 	);

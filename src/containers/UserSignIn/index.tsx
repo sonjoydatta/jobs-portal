@@ -4,14 +4,17 @@ import { useForm } from '@/libs/hooks';
 import { authStore } from '@/store';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
+import { useState } from 'react';
 import { SignInContainer } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const UserSignIn = () => {
 	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFormSubmit = async (payload: IAPI.LoginPayload) => {
 		if (payload) {
+			setIsLoading(true);
 			const res = await authService.login(payload);
 			if (res.success) {
 				const { token } = res.data;
@@ -22,6 +25,7 @@ export const UserSignIn = () => {
 				authStore.setState({ isLoggedIn: true, accessToken: token });
 				router.push('/dashboard/profile');
 			}
+			setIsLoading(false);
 		}
 	};
 
@@ -69,8 +73,8 @@ export const UserSignIn = () => {
 						variant={errors.password ? 'danger' : undefined}
 						message={errors.password}
 					/>
-					<Button type='submit' block>
-						Sign In
+					<Button type='submit' block disabled={isLoading}>
+						{isLoading ? 'Loading...' : 'Sign In'}
 					</Button>
 				</form>
 			</Card>

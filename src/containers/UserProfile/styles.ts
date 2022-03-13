@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+type InitialsAvatarProps = {
+	name: string;
+	size?: 'sm';
+};
+
 export const ProfileContainer = styled.div`
 	max-width: 48.75rem;
 	margin: 1.25rem auto;
@@ -34,4 +39,16 @@ export const ProfileContainer = styled.div`
 		border: 0;
 		background-color: var(--gray-200);
 	}
+`;
+
+export const InitialsAvatar = styled.div<InitialsAvatarProps>`
+	font-size: ${({ size }) => (size === 'sm' ? '1.25rem' : '2.5rem')};
+	color: #fff;
+	background-color: ${({ name }) => {
+		return `#${name
+			.split('')
+			.map((char) => char.charCodeAt(0))
+			.reduce((acc, curr) => acc + curr)
+			.toString(16)}`;
+	}};
 `;
