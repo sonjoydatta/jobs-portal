@@ -44,11 +44,10 @@ export const ProfileContainer = styled.div`
 export const InitialsAvatar = styled.div<InitialsAvatarProps>`
 	font-size: ${({ size }) => (size === 'sm' ? '1.25rem' : '2.5rem')};
 	color: #fff;
-	background-color: ${({ name }) => {
-		return `#${name
+	background-color: ${({ name }) =>
+		`#${name
 			.split('')
 			.map((char) => char.charCodeAt(0))
-			.reduce((acc, curr) => acc + curr)
-			.toString(16)}`;
-	}};
+			.reduce((acc, curr) => acc + curr, 0)
+			.toString(16)}`};
 `;

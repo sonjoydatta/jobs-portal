@@ -11,6 +11,10 @@ import { HttpService } from './http.service';
 class ProfileService {
 	constructor(private http: HttpService) {}
 
+	logout() {
+		return this.http.post<{ message: string }>('auth/logout', {});
+	}
+
 	getProfile() {
 		return this.http.get<ProfileResponse>('user/profile');
 	}

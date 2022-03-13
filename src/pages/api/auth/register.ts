@@ -7,6 +7,7 @@ import {
 	InvalidMethodException,
 } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { setCookie } from 'nookies';
 import { getUserWithJWT } from './login';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -49,6 +50,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 
 		const data = await getUserWithJWT(newUser);
+		setCookie({ res }, 'token', data.token, {
+			maxAge: 7 * 24 * 60 * 60,
+			path: '/',
+		});
 
 		res.status(200).json({ data });
 	} catch (error) {

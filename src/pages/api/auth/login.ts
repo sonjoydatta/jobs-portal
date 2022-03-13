@@ -10,6 +10,7 @@ import {
 } from '@/utils/httpException';
 import { WithId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { setCookie } from 'nookies';
 
 export const getUserWithJWT = async (user: WithId<UserEntity>) => {
 	const token = await signJWT({ id: user._id.toString() });
@@ -42,6 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 
 		const data = await getUserWithJWT(user);
+		setCookie({ res }, 'token', data.token, {
+			maxAge: 7 * 24 * 60 * 60,
+			path: '/',
+		});
 
 		res.status(200).json({ success: true, data });
 	} catch (error) {

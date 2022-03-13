@@ -19,7 +19,11 @@ const initialState: IProfileStore = {
 	isEditable: true,
 };
 
-class ProfileStore extends getStoreClass<IProfileStore>() {}
+class ProfileStore extends getStoreClass<IProfileStore>() {
+	destroy() {
+		this.setState(initialState);
+	}
+}
 
 export const profileStore = new ProfileStore(initialState);
 if (process.env.NODE_ENV === 'development') {

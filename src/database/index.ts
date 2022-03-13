@@ -1,30 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { server } from '@/config/server';
-import { InternalServerErrorException } from '@/utils/httpException';
-import { MongoClient } from 'mongodb';
+import client from './mongodb';
 
 export interface ConstructableModel<T> {
 	new (...args: any[]): T;
 	COLLECTION_NAME: string;
 }
 
-let connection: MongoClient | null = null;
-
 export const getModel = async <T>(model: ConstructableModel<T>): Promise<T> => {
-	if (connection) {
-		return new model(connection.db('glints').collection(model.COLLECTION_NAME));
-	}
-
-	const url = server.mongoURL;
-	if (!url)
-		throw new InternalServerErrorException('Failed to Connect to database');
-
-	const client = new MongoClient(url);
-	await client.connect();
-
-	connection = client;
-
-	const collection = client.db('glints').collection(model.COLLECTION_NAME);
+	const collection = (await client)
+		.db('glints')
+		.collection(model.COLLECTION_NAME);
 
 	return new model(collection);
 };
