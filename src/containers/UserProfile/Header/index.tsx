@@ -18,22 +18,29 @@ export const Header: FC = memo(() => {
 		}
 	}, []);
 
-	const handleUploadAvatar = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files && e.target.files[0]) {
-			const img = e.target.files[0];
-			if (img) {
-				const res = await profileService.updateProfileAvatar(img);
-				if (res.success) {
-					profileStore.setUser(res.data);
+	const handleUploadAvatar = useCallback(
+		async (e: ChangeEvent<HTMLInputElement>) => {
+			if (e.target.files && e.target.files[0]) {
+				const img = e.target.files[0];
+				if (img) {
+					const res = await profileService.updateProfileAvatar(img);
+					if (res.success) {
+						profileStore.setUser(res.data);
+					}
 				}
 			}
-		}
-	}, []);
+		},
+		[]
+	);
 
 	return (
 		<CardHeader style={{ position: 'relative' }}>
 			<div className='content'>
-				<Avatar className='content-avatar' size='xl' onClick={handleTriggerAvatarClick}>
+				<Avatar
+					className='content-avatar'
+					size='xl'
+					onClick={handleTriggerAvatarClick}
+				>
 					<img src={avatar} alt={name} />
 					<input
 						ref={inputRef}

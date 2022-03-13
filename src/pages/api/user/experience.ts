@@ -7,7 +7,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const handlerAdd = async (req: NextApiRequest, res: NextApiResponse) => {
 	const userId = await getJWTId(req);
 
-	const payload: ExperienceEntity = JSON.parse(req.body) || {};
+	const payload: ExperienceEntity = req.body || {};
 	if (Object.keys(payload).length === 0)
 		throw new BadRequestException('Request body is empty or invalid');
 
@@ -19,7 +19,8 @@ const handlerAdd = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	if (payload.isCurrent === undefined) payload.isCurrent = false;
 
-	if (!payload.isCurrent && !payload.to) throw new BadRequestException('End date is required');
+	if (!payload.isCurrent && !payload.to)
+		throw new BadRequestException('End date is required');
 
 	const model = await getModel(ExperienceModel);
 	const experience = await model.create({
@@ -49,7 +50,7 @@ const handlerUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
 		throw new BadRequestException('Request body is empty or invalid');
 
 	const model = await getModel(ExperienceModel);
-	const experience = await model.update(id, JSON.parse(payload));
+	const experience = await model.update(id, payload);
 
 	res.status(200).json({ success: true, data: experience });
 };

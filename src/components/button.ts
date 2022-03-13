@@ -47,9 +47,14 @@ export const Button = styled.button<ButtonProps>`
 				`;
 		}
 	}}
-  box-shadow: ${({ shadow }) => (shadow ? '0 0.5rem 1rem rgba(0, 0, 0, 0.15)' : 'none')};
+  box-shadow: ${({ shadow }) =>
+		shadow ? '0 0.5rem 1rem rgba(0, 0, 0, 0.15)' : 'none'};
 	border-radius: ${({ rounded }) =>
-		rounded === 'circle' ? '50%' : rounded === 'pill' ? '50rem' : `var(--base-border-radius)`};
+		rounded === 'circle'
+			? '50%'
+			: rounded === 'pill'
+			? '50rem'
+			: `var(--base-border-radius)`};
 	transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 	&:hover,

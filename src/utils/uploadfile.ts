@@ -27,7 +27,11 @@ const getBucket = () => {
 	return getStorage().bucket();
 };
 
-const uploadfile = async (folder: string, name: string, file: Buffer): Promise<string> => {
+const uploadfile = async (
+	folder: string,
+	name: string,
+	file: Buffer
+): Promise<string> => {
 	const bucket = getBucket();
 	const fileObject = bucket.file(`${folder}/${name}`);
 
@@ -37,5 +41,7 @@ const uploadfile = async (folder: string, name: string, file: Buffer): Promise<s
 	return fileObject.publicUrl();
 };
 
-export const uploadAvatar = (name: string, file: Buffer) => uploadfile('user_avatars', name, file);
-export const uploadLogo = (name: string, file: Buffer) => uploadfile('company_logos', name, file);
+export const uploadAvatar = (name: string, file: Buffer) =>
+	uploadfile('user_avatars', name, file);
+export const uploadLogo = (name: string, file: Buffer) =>
+	uploadfile('company_logos', name, file);

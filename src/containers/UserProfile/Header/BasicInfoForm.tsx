@@ -3,7 +3,14 @@ import { profileService } from '@/libs/api';
 import { useForm } from '@/libs/hooks';
 import SolidSVG, { IconPencil } from '@/libs/SolidSVG';
 import { profileStore, useProfileStore } from '@/store';
-import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import {
+	Fragment,
+	memo,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const BasicInfoForm = memo(() => {
@@ -20,7 +27,9 @@ export const BasicInfoForm = memo(() => {
 
 	const handleTriggerSubmit = useCallback(() => {
 		if (formRef.current) {
-			formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+			formRef.current.dispatchEvent(
+				new Event('submit', { cancelable: true, bubbles: true })
+			);
 		}
 	}, []);
 
@@ -46,7 +55,12 @@ export const BasicInfoForm = memo(() => {
 	return (
 		<Fragment>
 			{isEditable && (
-				<Button className='action-button' rounded='circle' variant='link' onClick={handleModalOpen}>
+				<Button
+					className='action-button'
+					rounded='circle'
+					variant='link'
+					onClick={handleModalOpen}
+				>
 					<SolidSVG path={IconPencil} />
 				</Button>
 			)}
@@ -92,7 +106,12 @@ export const BasicInfoForm = memo(() => {
 				</Modal.Body>
 
 				<Modal.Footer>
-					<Button type='button' rounded='pill' size='sm' onClick={handleTriggerSubmit}>
+					<Button
+						type='button'
+						rounded='pill'
+						size='sm'
+						onClick={handleTriggerSubmit}
+					>
 						Save changes
 					</Button>
 				</Modal.Footer>

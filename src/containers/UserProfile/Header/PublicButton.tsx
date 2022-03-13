@@ -37,7 +37,12 @@ export const PublicButton: FC = () => {
 				</Button>
 			)}
 			{isPublic && isEditable && (
-				<input type='text' className='public-url' value={`${baseURL}/public/${_id}`} readOnly />
+				<input
+					type='text'
+					className='public-url'
+					value={`${baseURL}/public/${_id}`}
+					readOnly
+				/>
 			)}
 		</Fragment>
 	);

@@ -37,9 +37,14 @@ export class InternalServerErrorException extends HttpException {
 	}
 }
 
-export const handleApiErrors = (error: unknown, res: NextApiResponse<HttpResponse<unknown>>) => {
+export const handleApiErrors = (
+	error: unknown,
+	res: NextApiResponse<HttpResponse<unknown>>
+) => {
 	if (error instanceof HttpException) {
-		return res.status(error.status).json({ error: error.message, success: false });
+		return res
+			.status(error.status)
+			.json({ error: error.message, success: false });
 	}
 
 	if (error instanceof Error) {

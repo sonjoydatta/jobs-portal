@@ -26,4 +26,5 @@ export const profileStore = new ProfileStore(initialState);
 if (process.env.NODE_ENV === 'development') {
 	withDevTools(profileStore, 'Profile');
 }
-export const [useProfileStore, useProfileSelector] = createStoreHooks(profileStore);
+export const [useProfileStore, useProfileSelector] =
+	createStoreHooks(profileStore);

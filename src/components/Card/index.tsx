@@ -5,7 +5,10 @@ import { StyledComponent } from 'styled-components';
 import { CardHeader, CardTitle, CardWrapper } from './styles';
 
 type PropertyType = 'Header' | 'Title';
-type CardProperties = Record<PropertyType, StyledComponent<'div', any, {}, never>>;
+type CardProperties = Record<
+	PropertyType,
+	StyledComponent<'div', any, {}, never>
+>;
 
 export const Card: FC & CardProperties = (props) => <CardWrapper {...props} />;
 

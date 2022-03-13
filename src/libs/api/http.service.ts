@@ -1,57 +1,71 @@
-type RequestOptions = {
-	headers: Record<string, string>;
-};
-
-export type HttpResponse<T> = { data: T; success: true } | { error: string; success: false };
+export type HttpResponse<T> =
+	| { data: T; success: true }
+	| { error: string; success: false };
 
 type HttpServiceConfig = {
 	getToken?: () => string | null;
 	onUnauthorized?: () => void;
 };
 
+type RequestOptions = {
+	headers?: Record<string, string>;
+};
+
 export class HttpService {
-	constructor(private baseURL: string, private config: HttpServiceConfig = {}) {}
+	constructor(
+		private baseURL: string,
+		private config: HttpServiceConfig = {}
+	) {}
 
 	get<T>(url: string, options?: RequestOptions) {
-		return this.request<T>('GET', url, options);
+		return this.request<T>('GET', url, null, options);
 	}
 
 	post<T>(url: string, body: unknown, options?: RequestOptions) {
-		return this.request<T>('POST', url, { ...options, body: JSON.stringify(body) });
+		return this.request<T>('POST', url, JSON.stringify(body), options);
 	}
 
 	put<T>(url: string, body: unknown, options?: RequestOptions) {
-		return this.request<T>('PUT', url, { ...options, body: JSON.stringify(body) });
+		return this.request<T>('PUT', url, JSON.stringify(body), options);
 	}
 
 	delete<T>(url: string, options?: RequestOptions) {
-		return this.request<T>('DELETE', url, options);
+		return this.request<T>('DELETE', url, null, options);
 	}
 
 	patch<T>(url: string, body: unknown, options?: RequestOptions) {
-		return this.request<T>('PATCH', url, { ...options, body: JSON.stringify(body) });
+		return this.request<T>('PATCH', url, JSON.stringify(body), options);
 	}
 
-	upload<T>(url: string, body: FormData, options?: RequestInit) {
-		return this.request<T>('POST', url, { ...options, body });
+	upload<T>(url: string, body: FormData, options?: RequestOptions) {
+		return this.request<T>('POST', url, body, {
+			...options,
+			headers: { ...options?.headers },
+		});
 	}
 
 	private async request<T>(
 		method: string,
 		url: string,
-		options?: RequestInit
+		body: string | FormData | null = null,
+		options?: RequestOptions
 	): Promise<HttpResponse<T>> {
 		// Generate request URL with base URL and URL path
 		const requestURL = `${this.baseURL}/${url}`;
 
 		try {
+			const headers: Record<string, string> = {
+				'content-type': 'application/json',
+				...options?.headers,
+				Authorization: this.config.getToken?.() || '',
+			};
+
+			if (body?.constructor?.name === 'FormData') {
+				delete headers['content-type'];
+			}
 			const response = await fetch(requestURL, {
-				headers: {
-					Accept: 'application/json',
-					...options?.headers,
-					Authorization: this.config.getToken?.() || '',
-				},
-				body: options?.body,
+				headers,
+				body,
 				method,
 			});
 

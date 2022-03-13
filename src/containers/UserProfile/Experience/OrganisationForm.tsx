@@ -3,7 +3,15 @@ import { profileService } from '@/libs/api';
 import { useForm } from '@/libs/hooks';
 import { monthOptions } from '@/utils/constants';
 import { yearOptions } from '@/utils/helpers';
-import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+	FC,
+	memo,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { convertToPayload, convertToValues } from './helpers';
 import { GridItems } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
@@ -19,19 +27,24 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 		const formRef = useRef<HTMLFormElement>(null);
 		const [avatar, setAvatar] = useState<string>();
 
-		const handleAvatarChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-			const file = e.target.files?.[0];
-			if (file) {
-				const res = await profileService.updateCompanyLogo(file);
-				if (res.success) {
-					setAvatar(res.data.avatar);
+		const handleAvatarChange = useCallback(
+			async (e: React.ChangeEvent<HTMLInputElement>) => {
+				const file = e.target.files?.[0];
+				if (file) {
+					const res = await profileService.updateCompanyLogo(file);
+					if (res.success) {
+						setAvatar(res.data.avatar);
+					}
 				}
-			}
-		}, []);
+			},
+			[]
+		);
 
 		const handleTriggerSubmit = useCallback(() => {
 			if (formRef.current) {
-				formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+				formRef.current.dispatchEvent(
+					new Event('submit', { cancelable: true, bubbles: true })
+				);
 			}
 		}, []);
 
@@ -187,7 +200,12 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button type='button' rounded='pill' size='sm' onClick={handleTriggerSubmit}>
+					<Button
+						type='button'
+						rounded='pill'
+						size='sm'
+						onClick={handleTriggerSubmit}
+					>
 						Save
 					</Button>
 				</Modal.Footer>

@@ -5,9 +5,11 @@ export const isNullProperties = (obj: Record<string, unknown>): boolean => {
 	return true;
 };
 
-export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalize = (str: string) =>
+	str.charAt(0).toUpperCase() + str.slice(1);
 
-export const formatReadable = (value: string): string => value.replace(/([A-Z])/g, ' $1');
+export const formatReadable = (value: string): string =>
+	value.replace(/([A-Z])/g, ' $1');
 
 export const formatValidatorKey = (value: string): string => {
 	const val = formatReadable(value);

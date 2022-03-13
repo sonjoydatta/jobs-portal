@@ -15,7 +15,8 @@ export const config = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		if (req.method !== 'POST') throw new BadRequestException('Method not allowed');
+		if (req.method !== 'POST')
+			throw new BadRequestException('Method not allowed');
 
 		const id = await getJWTId(req);
 
@@ -35,7 +36,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const file = Buffer.concat(fileParts);
 		const optimizedBuffer = await sharp(file).webp().toBuffer();
-		const url = await uploadLogo(`${Date.now().toString()}.webp`, optimizedBuffer);
+		const url = await uploadLogo(
+			`${Date.now().toString()}.webp`,
+			optimizedBuffer
+		);
 		const data = {
 			avatar: url,
 		};

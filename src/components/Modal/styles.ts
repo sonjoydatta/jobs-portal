@@ -29,7 +29,8 @@ export const ModalWrapper = styled.div<ModalProps>`
 			pointer-events: auto;
 			background-color: var(--white);
 			border-radius: var(--base-border-radius);
-			box-shadow: 0 0.25rem 0.375rem -1px rgba(0, 0, 0, 0.1), 0 2px 0.25rem -2px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 0.25rem 0.375rem -1px rgba(0, 0, 0, 0.1),
+				0 2px 0.25rem -2px rgba(0, 0, 0, 0.1);
 			max-height: 100%;
 			overflow: hidden;
 		}

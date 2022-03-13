@@ -15,7 +15,9 @@ const PublicProfile: NextPage<Props> = ({ isPublic }) => {
 	return <UserProfile />;
 };
 
-PublicProfile.getInitialProps = async (ctx: NextPageContext): Promise<Props> => {
+PublicProfile.getInitialProps = async (
+	ctx: NextPageContext
+): Promise<Props> => {
 	const { id } = ctx.query;
 	const res = await authService.publicProfile(id as string);
 	if (res.success) {

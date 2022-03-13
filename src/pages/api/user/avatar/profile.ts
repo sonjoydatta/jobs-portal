@@ -3,7 +3,11 @@
 import { getModel } from '@/database';
 import { UserModel } from '@/database/models';
 import { getJWTId } from '@/utils/auth/jwt';
-import { BadRequestException, handleApiErrors, NotFoundException } from '@/utils/httpException';
+import {
+	BadRequestException,
+	handleApiErrors,
+	NotFoundException,
+} from '@/utils/httpException';
 import { uploadAvatar } from '@/utils/uploadfile';
 import { IncomingForm } from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -17,7 +21,8 @@ export const config = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		if (req.method !== 'POST') throw new BadRequestException('Method not allowed');
+		if (req.method !== 'POST')
+			throw new BadRequestException('Method not allowed');
 
 		const id = await getJWTId(req);
 
@@ -36,8 +41,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		});
 
 		const file = Buffer.concat(fileParts);
-		const optimizedBuffer = await sharp(file).webp().toBuffer();
-		const url = await uploadAvatar(`${Date.now().toString()}.webp`, optimizedBuffer);
+		const optimizedBuffer = await sharp(file)
+			.webp()
+			.resize(600, 600, { fit: 'cover' })
+			.toBuffer();
+		const url = await uploadAvatar(
+			`${Date.now().toString()}.webp`,
+			optimizedBuffer
+		);
 		const model = await getModel(UserModel);
 		const user = await model.update(id, { avatar: url });
 

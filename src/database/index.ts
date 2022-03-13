@@ -16,7 +16,8 @@ export const getModel = async <T>(model: ConstructableModel<T>): Promise<T> => {
 	}
 
 	const url = server.mongoURL;
-	if (!url) throw new InternalServerErrorException('Failed to Connect to database');
+	if (!url)
+		throw new InternalServerErrorException('Failed to Connect to database');
 
 	const client = new MongoClient(url);
 	await client.connect();

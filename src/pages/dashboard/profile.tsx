@@ -8,6 +8,7 @@ const Profile: NextPage = () => <UserProfile />;
 
 Profile.getInitialProps = async () => {
 	const res = await profileService.getProfile();
+	console.log(res);
 	if (res.success) {
 		profileStore.setUser((prev) => ({ ...prev, ...res.data }));
 	}

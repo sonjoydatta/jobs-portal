@@ -23,12 +23,17 @@ export class UserModel {
 		return this.collection.findOne({ email });
 	}
 
-	async create(user: Omit<UserEntity, 'isPublic'>): Promise<WithId<UserEntity>> {
+	async create(
+		user: Omit<UserEntity, 'isPublic'>
+	): Promise<WithId<UserEntity>> {
 		const { insertedId } = await this.collection.insertOne(user);
 		return { ...user, _id: insertedId };
 	}
 
-	async update(id: string, profile: Partial<Omit<UserEntity, 'email' | 'password'>>) {
+	async update(
+		id: string,
+		profile: Partial<Omit<UserEntity, 'email' | 'password'>>
+	) {
 		const doc = await this.collection.findOneAndUpdate(
 			{ _id: new ObjectID(id) },
 			{ $set: profile },

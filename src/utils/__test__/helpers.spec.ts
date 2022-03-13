@@ -1,4 +1,9 @@
-import { capitalize, formatReadable, formatValidatorKey, isNullProperties } from '../helpers';
+import {
+	capitalize,
+	formatReadable,
+	formatValidatorKey,
+	isNullProperties,
+} from '../helpers';
 
 describe('capitalize', () => {
 	it('should be defined', () => {

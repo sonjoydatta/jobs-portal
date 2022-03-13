@@ -9,7 +9,8 @@ export type OrganisationItemProps = {
 } & IAPI.ExperienceResponce;
 
 export const OrganisationItem: FC<OrganisationItemProps> = memo((props) => {
-	const { title, company, from, to, isCurrent, avatar, description, onEdit } = props;
+	const { title, company, from, to, isCurrent, avatar, description, onEdit } =
+		props;
 	const { isEditable } = useProfileStore();
 
 	return (
@@ -23,9 +24,16 @@ export const OrganisationItem: FC<OrganisationItemProps> = memo((props) => {
 				<p className='organisation-info__date'>
 					{from} - {isCurrent ? 'Present' : to}
 				</p>
-				{description && <p className='organisation-info__description'>{description}</p>}
+				{description && (
+					<p className='organisation-info__description'>{description}</p>
+				)}
 				{isEditable && (
-					<Button className='action-button' rounded='circle' variant='link' onClick={onEdit}>
+					<Button
+						className='action-button'
+						rounded='circle'
+						variant='link'
+						onClick={onEdit}
+					>
 						<SolidSVG path={IconPencil} />
 					</Button>
 				)}

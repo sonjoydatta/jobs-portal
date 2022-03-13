@@ -18,7 +18,9 @@ export const validateForm = (
 	if (values && Object.keys(values).length > 0) {
 		for (const key of Object.keys(values) as (keyof typeof initialValues)[]) {
 			if (key in initialErrors) {
-				errors[key] = !values[key] ? `${formatValidatorKey(key)} is required` : '';
+				errors[key] = !values[key]
+					? `${formatValidatorKey(key)} is required`
+					: '';
 			}
 		}
 	}

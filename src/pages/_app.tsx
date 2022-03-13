@@ -33,9 +33,17 @@ const MyApp = ({
 MyApp.getInitialProps = async (appContext: AppContext) => {
 	const cookies = parseCookies(appContext.ctx);
 	if (cookies?.token && cookies?.token !== '') {
-		authStore.setState((state) => ({ ...state, isLoggedIn: true, accessToken: cookies.token }));
+		authStore.setState((state) => ({
+			...state,
+			isLoggedIn: true,
+			accessToken: cookies.token,
+		}));
 	} else {
-		authStore.setState((state) => ({ ...state, isLoggedIn: false, accessToken: '' }));
+		authStore.setState((state) => ({
+			...state,
+			isLoggedIn: false,
+			accessToken: '',
+		}));
 	}
 
 	const appProps = await App.getInitialProps(appContext);

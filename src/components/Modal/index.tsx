@@ -3,9 +3,19 @@ import SolidSVG, { IconClose } from '@/libs/SolidSVG';
 import { FC, useEffect, useRef } from 'react';
 import { ModalProperties, ModalProps } from '../@types';
 import { Button } from '../button';
-import { ModalBody, ModalFooter, ModalHeaderWrapper, ModalTitle, ModalWrapper } from './styles';
+import {
+	ModalBody,
+	ModalFooter,
+	ModalHeaderWrapper,
+	ModalTitle,
+	ModalWrapper,
+} from './styles';
 
-export const Modal: FC<ModalProps> & ModalProperties = ({ children, onClose, ...rest }) => {
+export const Modal: FC<ModalProps> & ModalProperties = ({
+	children,
+	onClose,
+	...rest
+}) => {
 	const contentRef = useRef<HTMLDivElement>(null);
 	useOnClickOutside(contentRef, () => onClose?.());
 
@@ -47,11 +57,19 @@ export const Modal: FC<ModalProps> & ModalProperties = ({ children, onClose, ...
 	);
 };
 
-const ModalHeader: FC<Pick<ModalProps, 'onClose'>> = ({ children, onClose }) => (
+const ModalHeader: FC<Pick<ModalProps, 'onClose'>> = ({
+	children,
+	onClose,
+}) => (
 	<ModalHeaderWrapper>
 		{children}
 		{onClose && (
-			<Button className='action-button' rounded='circle' variant='link' onClick={onClose}>
+			<Button
+				className='action-button'
+				rounded='circle'
+				variant='link'
+				onClick={onClose}
+			>
 				<SolidSVG path={IconClose} />
 			</Button>
 		)}

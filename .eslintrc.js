@@ -10,7 +10,6 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:prettier/recommended',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -20,7 +19,7 @@ module.exports = {
 		ecmaVersion: 12,
 		sourceType: 'module',
 	},
-	plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
+	plugins: ['react', '@typescript-eslint', 'react-hooks'],
 	rules: {
 		'linebreak-style': [0, 'auto'],
 		'react-hooks/rules-of-hooks': 'error',
@@ -29,13 +28,6 @@ module.exports = {
 		'@typescript-eslint/explicit-function-return-type': 0,
 		'@typescript-eslint/explicit-module-boundary-types': 0,
 		'react/prop-types': 0,
-		'prettier/prettier': [
-			'error',
-			{},
-			{
-				usePrettierrc: true,
-			},
-		],
 		'no-unused-vars': 'off',
 		'react/display-name': 'off',
 		'react-hooks/rules-of-hooks': 'off',

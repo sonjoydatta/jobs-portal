@@ -10,7 +10,9 @@ describe('HttpException', () => {
 	});
 
 	it('should be a class', () => {
-		expect(new HttpException(401, 'Unauthorized')).toBeInstanceOf(HttpException);
+		expect(new HttpException(401, 'Unauthorized')).toBeInstanceOf(
+			HttpException
+		);
 	});
 
 	it('should have a status property', () => {

@@ -48,7 +48,8 @@ export const FormInput = styled.input<FormInputProps>`
 	transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
 	&:focus {
-		box-shadow: 0 0 0 2px ${({ variant = 'primary' }) => `var(--${variant}-outline)`};
+		box-shadow: 0 0 0 2px
+			${({ variant = 'primary' }) => `var(--${variant}-outline)`};
 		border-color: ${({ variant = 'primary' }) => `var(--${variant})`};
 	}
 `;
@@ -66,7 +67,8 @@ export const FormTextarea = styled.textarea<FormTextareaProps>`
 	transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
 	&:focus {
-		box-shadow: 0 0 0 2px ${({ variant = 'primary' }) => `var(--${variant}-outline)`};
+		box-shadow: 0 0 0 2px
+			${({ variant = 'primary' }) => `var(--${variant}-outline)`};
 		border-color: ${({ variant = 'primary' }) => `var(--${variant})`};
 	}
 `;
@@ -112,7 +114,8 @@ export const FormSelect = styled.select<FormSelectProps>`
 	transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
 	&:focus {
-		box-shadow: 0 0 0 2px ${({ variant = 'primary' }) => `var(--${variant}-outline)`};
+		box-shadow: 0 0 0 2px
+			${({ variant = 'primary' }) => `var(--${variant}-outline)`};
 		border-color: ${({ variant = 'primary' }) => `var(--${variant})`};
 	}
 `;

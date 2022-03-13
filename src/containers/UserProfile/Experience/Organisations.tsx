@@ -18,7 +18,10 @@ export const Organisations: FC = memo(() => {
 	const handleUpdate = useCallback(
 		async (item: Omit<IAPI.ExperienceResponce, '_id' | 'userId'>) => {
 			if (selectedItem?._id && item) {
-				const res = await profileService.updateExperience(selectedItem._id, item);
+				const res = await profileService.updateExperience(
+					selectedItem._id,
+					item
+				);
 				if (res.success) {
 					profileStore.setExperiences((prev) => {
 						const index = prev.findIndex((i) => i._id === selectedItem._id);
@@ -35,7 +38,11 @@ export const Organisations: FC = memo(() => {
 	return (
 		<Wrapper>
 			{experiences.map((item) => (
-				<OrganisationItem key={item._id} {...item} onEdit={() => setSelectedItem(item)} />
+				<OrganisationItem
+					key={item._id}
+					{...item}
+					onEdit={() => setSelectedItem(item)}
+				/>
 			))}
 			<OrganisationForm
 				isOpen={!!selectedItem}

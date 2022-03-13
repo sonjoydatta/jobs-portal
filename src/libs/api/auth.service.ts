@@ -1,5 +1,10 @@
 import { client } from '@/config/client';
-import { AuthResponse, LoginPayload, PublicProfileResponse, RegisterPayload } from './@types';
+import {
+	AuthResponse,
+	LoginPayload,
+	PublicProfileResponse,
+	RegisterPayload,
+} from './@types';
 import { HttpService } from './http.service';
 
 class AuthService {

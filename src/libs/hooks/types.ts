@@ -7,7 +7,10 @@ export type UserFormProps<T, K> = {
 	onSuccess: (values: T) => void;
 };
 
-export type FormElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+export type FormElement =
+	| HTMLInputElement
+	| HTMLSelectElement
+	| HTMLTextAreaElement;
 
 export type UserFormReturn<T, K> = {
 	values: T;
