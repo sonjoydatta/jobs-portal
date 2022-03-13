@@ -23,6 +23,7 @@ const initialState: IProfileStore = {
 class ProfileStore extends getStoreClass<IProfileStore>() {}
 
 export const profileStore = new ProfileStore(initialState);
-withDevTools(profileStore, 'Profile');
-
+if (process.env.NODE_ENV === 'development') {
+	withDevTools(profileStore, 'Profile');
+}
 export const [useProfileStore, useProfileSelector] = createStoreHooks(profileStore);

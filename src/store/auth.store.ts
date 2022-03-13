@@ -12,5 +12,7 @@ const authStoreInitialProps: AuthStore = {
 };
 
 export const authStore = createStore(authStoreInitialProps);
-withDevTools(authStore, 'Auth');
+if (process.env.NODE_ENV === 'development') {
+	withDevTools(authStore, 'Auth');
+}
 export const [useAuthStore, useAuthStoreSeletor] = createStoreHooks(authStore);
