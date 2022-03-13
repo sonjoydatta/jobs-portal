@@ -47,7 +47,7 @@ export class HttpService {
 		try {
 			const response = await fetch(requestURL, {
 				headers: {
-					'content-type': 'application/json',
+					Accept: 'application/json',
 					...options?.headers,
 					Authorization: this.config.getToken?.() || '',
 				},

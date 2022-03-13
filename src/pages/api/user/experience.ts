@@ -5,9 +5,9 @@ import { BadRequestException, handleApiErrors } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const handlerAdd = async (req: NextApiRequest, res: NextApiResponse) => {
-	const id = await getJWTId(req);
+	const userId = await getJWTId(req);
 
-	const payload: ExperienceEntity = req.body || {};
+	const payload: ExperienceEntity = JSON.parse(req.body) || {};
 	if (Object.keys(payload).length === 0)
 		throw new BadRequestException('Request body is empty or invalid');
 
@@ -17,15 +17,13 @@ const handlerAdd = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	if (!payload.from) throw new BadRequestException('Start date is required');
 
-	if (!payload.avatar) throw new BadRequestException('Avatar is required');
-
 	if (payload.isCurrent === undefined) payload.isCurrent = false;
 
 	if (!payload.isCurrent && !payload.to) throw new BadRequestException('End date is required');
 
 	const model = await getModel(ExperienceModel);
 	const experience = await model.create({
-		userId: id,
+		userId,
 		title: payload.title,
 		company: payload.company,
 		from: payload.from,
@@ -44,33 +42,14 @@ const handlerUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
 	const id = req.query.id;
 	if (!id || Array.isArray(id)) throw new BadRequestException('Id is required');
 
-	const payload: ExperienceEntity = req.body || {};
+	const payload = req.body || {};
+	delete payload._id;
+	delete payload.userId;
 	if (Object.keys(payload).length === 0)
 		throw new BadRequestException('Request body is empty or invalid');
 
-	if (!payload.title) throw new BadRequestException('Title is required');
-
-	if (!payload.company) throw new BadRequestException('Company is required');
-
-	if (!payload.from) throw new BadRequestException('Start date is required');
-
-	if (!payload.avatar) throw new BadRequestException('Avatar is required');
-
-	if (payload.isCurrent === undefined) payload.isCurrent = false;
-
-	if (!payload.isCurrent && !payload.to) throw new BadRequestException('End date is required');
-
 	const model = await getModel(ExperienceModel);
-	const experience = await model.update(id, {
-		userId: id,
-		title: payload.title,
-		company: payload.company,
-		from: payload.from,
-		to: payload.to,
-		isCurrent: payload.isCurrent,
-		description: payload.description,
-		avatar: payload.avatar,
-	});
+	const experience = await model.update(id, JSON.parse(payload));
 
 	res.status(200).json({ success: true, data: experience });
 };

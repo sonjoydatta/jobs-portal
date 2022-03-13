@@ -9,7 +9,7 @@ export type ExperienceEntity = {
 	to?: string;
 	isCurrent?: boolean;
 	description?: string;
-	avatar: string;
+	avatar?: string;
 };
 
 export class ExperienceModel {

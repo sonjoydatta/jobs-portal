@@ -1,7 +1,9 @@
 import { Avatar, Card } from '@/components';
-import { useProfileStore } from '@/store';
+import { profileService } from '@/libs/api';
+import { profileStore, useProfileStore } from '@/store';
 import { ChangeEvent, FC, memo, useCallback, useRef } from 'react';
 import { BasicInfoForm } from './BasicInfoForm';
+import { PublicButton } from './PublicButton';
 import { CardHeader } from './styles';
 
 export const Header: FC = memo(() => {
@@ -16,13 +18,20 @@ export const Header: FC = memo(() => {
 		}
 	}, []);
 
-	const handleUploadAvatar = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		console.log(value);
+	const handleUploadAvatar = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			const img = e.target.files[0];
+			if (img) {
+				const res = await profileService.updateProfileAvatar(img);
+				if (res.success) {
+					profileStore.setUser(res.data);
+				}
+			}
+		}
 	}, []);
 
 	return (
-		<CardHeader>
+		<CardHeader style={{ position: 'relative' }}>
 			<div className='content'>
 				<Avatar className='content-avatar' size='xl' onClick={handleTriggerAvatarClick}>
 					<img src={avatar} alt={name} />
@@ -36,6 +45,7 @@ export const Header: FC = memo(() => {
 				<Card.Title className='content-title'>{name}</Card.Title>
 				<p className='content-subtitle'>Age: {age}</p>
 			</div>
+			<PublicButton />
 			<BasicInfoForm />
 		</CardHeader>
 	);

@@ -2,7 +2,7 @@
 import { getModel } from '@/database';
 import { UserModel } from '@/database/models';
 import { getJWTId } from '@/utils/auth/jwt';
-import { BadRequestException, handleApiErrors } from '@/utils/httpException';
+import { BadRequestException, handleApiErrors, NotFoundException } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const handlerGet = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -26,8 +26,8 @@ const handlerUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
 		throw new BadRequestException('Request body is empty or invalid');
 
 	const model = await getModel(UserModel);
-	const user = await model.update(id, payload);
-	if (!user) throw new BadRequestException('User not found');
+	const user = await model.update(id, JSON.parse(payload));
+	if (!user) throw new NotFoundException('User not found');
 	const { password, ...data } = user;
 
 	res.status(200).json({ success: true, data });

@@ -4,6 +4,7 @@ import { createStoreHooks } from '@poly-state/react';
 export type IProfileStore = {
 	user: IAPI.ProfileResponse;
 	experiences: IAPI.ExperiencesResponce;
+	isEditable: boolean;
 };
 
 const initialState: IProfileStore = {
@@ -16,6 +17,7 @@ const initialState: IProfileStore = {
 		age: '',
 	},
 	experiences: [],
+	isEditable: true,
 };
 
 class ProfileStore extends getStoreClass<IProfileStore>() {}

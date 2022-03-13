@@ -17,5 +17,21 @@ export const ProfileContainer = styled.div`
 		&:hover {
 			background-color: var(--gray-200);
 		}
+
+		&-public {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			padding: 0;
+		}
+	}
+
+	.public-url {
+		position: absolute;
+		right: 0;
+		bottom: 2rem;
+		padding: 0 0.5rem;
+		border: 0;
+		background-color: var(--gray-200);
 	}
 `;

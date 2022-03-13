@@ -10,6 +10,7 @@ export const BasicInfoForm = memo(() => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const {
 		user: { name, age },
+		isEditable,
 	} = useProfileStore();
 
 	const formRef = useRef<HTMLFormElement>(null);
@@ -44,9 +45,11 @@ export const BasicInfoForm = memo(() => {
 
 	return (
 		<Fragment>
-			<Button className='action-button' rounded='circle' variant='link' onClick={handleModalOpen}>
-				<SolidSVG path={IconPencil} />
-			</Button>
+			{isEditable && (
+				<Button className='action-button' rounded='circle' variant='link' onClick={handleModalOpen}>
+					<SolidSVG path={IconPencil} />
+				</Button>
+			)}
 
 			<Modal isOpen={isModalOpen} onClose={handleModalClose}>
 				<Modal.Header onClose={handleModalClose}>

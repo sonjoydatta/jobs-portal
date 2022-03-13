@@ -38,3 +38,4 @@ const uploadfile = async (folder: string, name: string, file: Buffer): Promise<s
 };
 
 export const uploadAvatar = (name: string, file: Buffer) => uploadfile('user_avatars', name, file);
+export const uploadLogo = (name: string, file: Buffer) => uploadfile('company_logos', name, file);

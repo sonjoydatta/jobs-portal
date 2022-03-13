@@ -1,5 +1,5 @@
 import { client } from '@/config/client';
-import { AuthResponse, LoginPayload, RegisterPayload } from './@types';
+import { AuthResponse, LoginPayload, PublicProfileResponse, RegisterPayload } from './@types';
 import { HttpService } from './http.service';
 
 class AuthService {
@@ -11,6 +11,10 @@ class AuthService {
 
 	register(payload: RegisterPayload) {
 		return this.http.post<AuthResponse>('auth/register', payload);
+	}
+
+	publicProfile(id: string) {
+		return this.http.get<PublicProfileResponse>(`user/public?id=${id}`);
 	}
 }
 

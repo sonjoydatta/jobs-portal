@@ -6,6 +6,7 @@ import {
 	BadRequestException,
 	handleApiErrors,
 	InvalidMethodException,
+	NotFoundException,
 } from '@/utils/httpException';
 import { WithId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -32,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const model = await getModel(UserModel);
 		const user = await model.findOneByEmail(req.body.email);
 		if (!user) {
-			throw new BadRequestException('User not found');
+			throw new NotFoundException('User not found');
 		}
 
 		const isValid = await comparePassword(req.body.password, user.password);

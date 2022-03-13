@@ -2,10 +2,12 @@ import { ExperienceEntity, UserEntity } from '@/database/models';
 
 export type ProfileResponse = {
 	_id: string;
-} & Omit<UserEntity, '_id' | 'password'>;
+} & Omit<UserEntity, 'password'>;
+
+export type ExperiencePayload = Omit<ExperienceEntity, 'userId'>;
 
 export type ExperienceResponce = {
 	_id: string;
-} & Omit<ExperienceEntity, '_id'>;
+} & ExperienceEntity;
 
 export type ExperiencesResponce = ExperienceResponce[];

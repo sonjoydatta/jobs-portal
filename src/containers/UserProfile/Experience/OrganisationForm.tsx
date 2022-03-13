@@ -1,21 +1,33 @@
 import { Button, Form, Modal, ModalProps } from '@/components';
+import { profileService } from '@/libs/api';
 import { useForm } from '@/libs/hooks';
 import { monthOptions } from '@/utils/constants';
 import { yearOptions } from '@/utils/helpers';
-import { FC, memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { convertToPayload, convertToValues } from './helpers';
 import { GridItems } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 type OrganisationFormProps = ModalProps & {
 	defaultValues?: IAPI.ExperienceResponce;
-	onSubmit: (data: Omit<IAPI.ExperienceResponce, '_id' | 'userId'>) => void;
+	onSubmit: (data: IAPI.ExperiencePayload) => void;
 };
 
 export const OrganisationForm: FC<OrganisationFormProps> = memo(
 	({ isOpen, onClose, defaultValues, onSubmit }) => {
 		const modalProps = { isOpen, onClose };
 		const formRef = useRef<HTMLFormElement>(null);
+		const [avatar, setAvatar] = useState<string>();
+
+		const handleAvatarChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+			const file = e.target.files?.[0];
+			if (file) {
+				const res = await profileService.updateCompanyLogo(file);
+				if (res.success) {
+					setAvatar(res.data.avatar);
+				}
+			}
+		}, []);
 
 		const handleTriggerSubmit = useCallback(() => {
 			if (formRef.current) {
@@ -23,17 +35,31 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 			}
 		}, []);
 
+		const handleFormSubmit = useCallback(
+			(data: typeof initialValues) => {
+				if (data) {
+					const parsedData = convertToPayload(data);
+					onSubmit({
+						...parsedData,
+						avatar,
+					});
+				}
+			},
+			[avatar, onSubmit]
+		);
+
 		const { values, setValues, errors, handleChange, handleSubmit } = useForm({
 			initialValues,
 			initialErrors,
-			onSuccess: (data) => onSubmit(convertToPayload(data)),
+			onSuccess: handleFormSubmit,
 			validate: validateForm,
 		});
 
 		useEffect(() => {
 			if (defaultValues) {
-				const parsedValues = convertToValues(defaultValues);
-				setValues(parsedValues);
+				const { avatar: avatarURL, ...rest } = convertToValues(defaultValues);
+				if (avatarURL) setAvatar(avatarURL);
+				setValues(rest);
 			}
 		}, [defaultValues, setValues]);
 
@@ -75,6 +101,16 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 							}}
 							variant={errors.company ? 'danger' : undefined}
 							message={errors.company}
+						/>
+						<Form.Item
+							labelProps={{
+								labelText: 'Company logo',
+							}}
+							inputProps={{
+								type: 'file',
+								name: 'avatar',
+								onChange: handleAvatarChange,
+							}}
 						/>
 						<Form.ItemCheck
 							labelProps={{

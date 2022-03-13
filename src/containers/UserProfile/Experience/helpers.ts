@@ -1,7 +1,11 @@
 import { initialValues } from './validations';
 
+type Values = typeof initialValues & {
+	avatar?: string;
+};
+
 export const convertToValues = (data: IAPI.ExperienceResponce) => {
-	const values = {} as typeof initialValues;
+	const values = {} as Values;
 
 	for (const key in data) {
 		switch (key as keyof IAPI.ExperienceResponce) {
@@ -37,6 +41,10 @@ export const convertToValues = (data: IAPI.ExperienceResponce) => {
 				values.description = data.description || '';
 				break;
 
+			case 'avatar':
+				values.avatar = data.avatar || undefined;
+				break;
+
 			default:
 				break;
 		}
@@ -46,14 +54,13 @@ export const convertToValues = (data: IAPI.ExperienceResponce) => {
 };
 
 export const convertToPayload = (values: typeof initialValues) => {
-	const payload: Omit<IAPI.ExperienceResponce, '_id' | 'userId'> = {
+	const payload: Omit<IAPI.ExperiencePayload, 'avatar'> = {
 		title: values.title,
 		company: values.company,
 		from: `${values.startMonth} ${values.startYear}`,
 		to: values.isCurrent ? undefined : `${values.endMonth} ${values.endYear}`,
 		isCurrent: values.isCurrent,
 		description: values.description,
-		avatar: 'https://via.placeholder.com/150',
 	};
 
 	return payload;
