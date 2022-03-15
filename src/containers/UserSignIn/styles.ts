@@ -8,4 +8,8 @@ export const SignInContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	button[type='submit'] {
+		margin-bottom: 0.5rem;
+	}
 `;

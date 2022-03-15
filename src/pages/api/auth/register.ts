@@ -55,7 +55,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			path: '/',
 		});
 
-		res.status(200).json({ data });
+		res.status(200).json({ success: true, data });
 	} catch (error) {
 		handleApiErrors(error, res);
 	}

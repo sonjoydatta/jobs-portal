@@ -6,29 +6,34 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
 import { useState } from 'react';
-import { SignInContainer } from './styles';
+import { SignInContainer } from '../UserSignIn/styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
-export const UserSignIn = () => {
+export const UserRegister = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
+	const [gError, setGError] = useState('');
 
-	const handleFormSubmit = async (payload: IAPI.LoginPayload) => {
+	const handleFormSubmit = async (payload: IAPI.RegisterPayload) => {
 		if (payload) {
 			setIsLoading(true);
 			try {
-				const res = await authService.login(payload);
-				if (res.success) {
-					const { token } = res.data;
-					setCookie(null, 'token', token, {
-						maxAge: 7 * 24 * 60 * 60,
-						path: '/',
-					});
-					authStore.setState({ isLoggedIn: true, accessToken: token });
-					router.push('/dashboard/profile');
+				const res = await authService.register(payload);
+				if (!res.success) {
+					throw new Error(res.error);
 				}
+
+				const { token } = res.data;
+				setCookie(null, 'token', token, {
+					maxAge: 7 * 24 * 60 * 60,
+					path: '/',
+				});
+				authStore.setState({ isLoggedIn: true, accessToken: token });
+				router.push('/dashboard/profile');
 			} catch (error) {
 				setIsLoading(false);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				setGError((error as any).message);
 			}
 		}
 	};
@@ -44,9 +49,40 @@ export const UserSignIn = () => {
 		<SignInContainer>
 			<Card>
 				<Card.Header style={{ marginBottom: '1rem' }}>
-					<Card.Title>Please, Sign in</Card.Title>
+					<Card.Title>Create a new account</Card.Title>
 				</Card.Header>
+				{gError && <p style={{ color: 'red' }}>{gError}</p>}
 				<form onSubmit={handleSubmit}>
+					<Form.Item
+						labelProps={{
+							labelText: 'Name',
+							srOnly: true,
+						}}
+						inputProps={{
+							type: 'text',
+							name: 'name',
+							placeholder: 'Enter your name',
+							value: values.name,
+							onChange: handleChange,
+						}}
+						variant={errors.name ? 'danger' : undefined}
+						message={errors.name}
+					/>
+					<Form.Item
+						labelProps={{
+							labelText: 'Age',
+							srOnly: true,
+						}}
+						inputProps={{
+							type: 'text',
+							name: 'age',
+							placeholder: 'Enter your age',
+							value: values.age,
+							onChange: handleChange,
+						}}
+						variant={errors.age ? 'danger' : undefined}
+						message={errors.age}
+					/>
 					<Form.Item
 						labelProps={{
 							labelText: 'Email',
@@ -78,9 +114,9 @@ export const UserSignIn = () => {
 						message={errors.password}
 					/>
 					<Button type='submit' block disabled={isLoading}>
-						{isLoading ? 'Loading...' : 'Sign In'}
+						{isLoading ? 'Loading...' : 'Register'}
 					</Button>
-					<Link href='/register'>Create a new account</Link>
+					<Link href='/'>Back to Sign In</Link>
 				</form>
 			</Card>
 		</SignInContainer>

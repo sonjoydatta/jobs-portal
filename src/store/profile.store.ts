@@ -1,3 +1,4 @@
+import { client } from '@/config/client';
 import { getStoreClass, withDevTools } from '@poly-state/poly-state';
 import { createStoreHooks } from '@poly-state/react';
 
@@ -26,7 +27,7 @@ class ProfileStore extends getStoreClass<IProfileStore>() {
 }
 
 export const profileStore = new ProfileStore(initialState);
-if (process.env.NODE_ENV === 'development') {
+if (client.isDev) {
 	withDevTools(profileStore, 'Profile');
 }
 export const [useProfileStore, useProfileSelector] =

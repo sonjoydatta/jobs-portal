@@ -1,31 +1,74 @@
-# Years of Experience?
+# Jobs Portal
 
-To align with what we use at Glints, we'd prefer you use React on the frontend, Node.js on the backend and Postgres as the database, with Typescript if you are confident. If you’re a frontend developer with no backend background, Firebase is always an option, but a more suitable stack will definitely earn you bonus points.
+## Features
 
-Build a simple editable profile page that represents a candidate's basic information and work experience. Minimally, the following information is required to be editable and presented:
+1. The application is built using [TypeScript](https://www.typescriptlang.org)
+2. Node provides the backend environment for this application
+3. Next.js is used to handle requests, routes
+4. MongoDB is used to store data
+5. Firebase is used as a cloud storage
+6. JWT is used to authenticate users
+7. Jest is used to test the application
+8. React for displaying UI components
+9. [poly-state](https://poly-state.github.io) to manage application's state
+10. styled-components and SCSS for styling
 
-1. Name
-2. Profile picture
-3. Age
-4. Work experiences (the following are information required for each instance)
+## Demo
 
-- Start date
-- End date (allow a current position option)
-- Job title
-- Company
-- Company logo
-- Job description
+This application is deployed on Vercel.. Please check it out 😄 [here](https://jobs-portal-theta.vercel.app).
 
-Ensure that reasonable input validation and error checking are present. The page should work in offline mode too. Edits made in offline mode should be later persisted when network connection is restored.
+```shell
+# Login to the application
+# Username: example@example.com
+# Password: newPass1234
+```
 
-You are free to decide on the best UIUX to both edit and present the information in a logical and consistent manner. On top of correctness, we will also factor in ease of use and general UI/UX highly in the evaluation.
+## Installation
 
-# Bonus
+Clone the repository and run the following command:
 
-_This is optional, and serves as additional proof points. We will consider it complete even without this functionality_
+```shell
+git clone https://github.com/sonjoydatta/jobs-portal.git
+```
 
-The profile should be private by default. Allow the user to determine a vanity URL for sharing, and the option to toggle which segments of the profile to be public versus private. In this case, you can choose to implement the standard suite of authorisation and authentication.
+Go to the directory and run the following command:
 
-# Deployment
+```shell
+cd jobs-portal && yarn
+```
 
-It'd be great if you can deploy this on the free tier of any cloud hosting platform (eg. free dyno on Heroku), so that we can easily access the application via an url.
+For start the application in development mode, run the following command:
+
+```shell
+yarn dev
+```
+
+For start the application in production mode, run the following command:
+
+```shell
+yarn build && yarn start
+```
+
+## Setup
+
+```shell
+Create .env file that includes the following variables
+
+NEXT_PUBLIC_API_URL
+MONGO_URL
+JWT_SECRET
+FIREBASE_PVT_KEY
+```
+
+## Languages & tools
+
+- [Node](https://nodejs.org)
+- [TypeScript](https://www.typescriptlang.org)
+- [Next.js](https://nextjs.org)
+- [MongoDB](https://www.mongodb.com)
+- [Firebase](https://firebase.google.com)
+- [JWT](https://jwt.io)
+- [Jest](https://jestjs.io)
+- [React](https://reactjs.org)
+- [poly-state](https://poly-state.github.io)
+- [styled-components](https://www.styled-components.com)

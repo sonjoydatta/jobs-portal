@@ -1,19 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { server } from '@/config/server';
 import { MongoClient } from 'mongodb';
 
-const uri = server.mongoURL!;
+declare global {
+	// eslint-disable-next-line no-var
+	var _mongoClientPromise: Promise<MongoClient>;
+}
+
+const uri = server.mongoURL;
+if (!uri) {
+	throw new Error('Please add your MONGO_URL to .env file');
+}
+
 const options = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-if (!server.mongoURL) {
-	throw new Error('Please add your Mongo URL to .env file');
-}
-
-if (process.env.NODE_ENV === 'development') {
+if (server.isDev) {
 	if (!global._mongoClientPromise) {
 		client = new MongoClient(uri, options);
 		global._mongoClientPromise = client.connect();
