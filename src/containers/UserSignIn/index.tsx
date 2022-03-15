@@ -12,12 +12,17 @@ import { initialErrors, initialValues, validateForm } from './validations';
 export const UserSignIn = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
+	const [gError, setGError] = useState('');
 
 	const handleFormSubmit = async (payload: IAPI.LoginPayload) => {
 		if (payload) {
 			setIsLoading(true);
 			try {
 				const res = await authService.login(payload);
+				if (!res.success) {
+					throw new Error(res.error);
+				}
+
 				if (res.success) {
 					const { token } = res.data;
 					setCookie(null, 'token', token, {
@@ -29,6 +34,8 @@ export const UserSignIn = () => {
 				}
 			} catch (error) {
 				setIsLoading(false);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				setGError((error as any).message);
 			}
 		}
 	};
@@ -46,6 +53,7 @@ export const UserSignIn = () => {
 				<Card.Header style={{ marginBottom: '1rem' }}>
 					<Card.Title>Please, Sign in</Card.Title>
 				</Card.Header>
+				{gError && <p style={{ color: 'red' }}>{gError}</p>}
 				<form onSubmit={handleSubmit}>
 					<Form.Item
 						labelProps={{
