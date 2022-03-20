@@ -5,31 +5,33 @@ import { authStore } from '@/store';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { SignInContainer } from '../UserSignIn/styles';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const UserRegister = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
-	const [commonError, setCommonError] = useState('');
+	const { addToast } = useToasts();
 
 	const handleFormSubmit = async (payload: IAPI.RegisterPayload) => {
 		if (payload) {
 			setIsLoading(true);
 			try {
 				const res = await authService.register(payload);
-				if (!res.success) {
-					throw new Error(res.error);
-				}
+				if (!res.success) throw new Error(res.error);
 
 				const { token } = res.data;
+				if (!token) throw new Error('Failed to get token');
+
+				addToast('Login success', { appearance: 'success', autoDismiss: true });
 				authStore.setState({ isLoggedIn: true, accessToken: token });
 				router.push('/dashboard/profile');
 			} catch (error) {
-				if (error instanceof Error) {
-					setCommonError(error.message);
-				}
 				setIsLoading(false);
+				if (error instanceof Error) {
+					addToast(error.message, { appearance: 'error', autoDismiss: true });
+				}
 			}
 		}
 	};
@@ -47,7 +49,6 @@ export const UserRegister = () => {
 				<Card.Header style={{ marginBottom: '1rem' }}>
 					<Card.Title>Create a new account</Card.Title>
 				</Card.Header>
-				{commonError && <p style={{ color: 'red' }}>{commonError}</p>}
 				<form onSubmit={handleSubmit}>
 					<Form.Item
 						labelProps={{

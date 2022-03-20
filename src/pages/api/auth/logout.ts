@@ -1,11 +1,10 @@
-import { getJWTId } from '@/utils/auth/jwt';
 import { handleApiErrors, InvalidMethodException } from '@/utils/httpException';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { destroyCookie } from 'nookies';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		await getJWTId(req);
+		// await getJWTId(req);
 
 		if (req.method !== 'POST')
 			throw new InvalidMethodException('Method not allowed');

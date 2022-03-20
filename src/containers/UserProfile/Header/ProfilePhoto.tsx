@@ -2,6 +2,7 @@ import { profileService } from '@/libs/api';
 import { profileStore, useProfileStore } from '@/store';
 import { defaultTextAvatar } from '@/utils/helpers';
 import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { InitialsAvatar } from '../styles';
 import { ProfileAvatar } from './styles';
 
@@ -12,6 +13,7 @@ export const ProfilePhoto: FC = () => {
 		isEditable,
 	} = useProfileStore();
 	const inputRef = useRef<HTMLInputElement>(null);
+	const { addToast } = useToasts();
 
 	const handleClick = useCallback(() => {
 		if (isEditable && !isLoading && inputRef.current) {
@@ -28,10 +30,18 @@ export const ProfilePhoto: FC = () => {
 					try {
 						const res = await profileService.updateProfileAvatar(img);
 						if (!res.success) throw new Error(res.error);
-						profileStore.setUser(res.data);
+
+						addToast('Upload success', {
+							appearance: 'success',
+							autoDismiss: true,
+						});
+						profileStore.setUser((prev) => ({ ...prev, ...res.data }));
 					} catch (error) {
 						if (error instanceof Error) {
-							alert(error.message);
+							addToast(error.message, {
+								appearance: 'error',
+								autoDismiss: true,
+							});
 						}
 					} finally {
 						setLoading(false);
@@ -39,7 +49,7 @@ export const ProfilePhoto: FC = () => {
 				}
 			}
 		},
-		[isEditable]
+		[addToast, isEditable]
 	);
 
 	const imageComponent = useMemo(() => {

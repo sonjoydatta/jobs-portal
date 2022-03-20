@@ -12,6 +12,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { convertToPayload, convertToValues } from './helpers';
 import { GridItems } from './styles';
 import { initialErrors, initialValues, validateForm } from './validations';
@@ -27,18 +28,28 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 		const modalProps = { isOpen, onClose };
 		const formRef = useRef<HTMLFormElement>(null);
 		const [avatar, setAvatar] = useState<string>();
+		const { addToast } = useToasts();
 
 		const handleAvatarChange = useCallback(
 			async (e: React.ChangeEvent<HTMLInputElement>) => {
 				const file = e.target.files?.[0];
 				if (file) {
-					const res = await profileService.updateCompanyLogo(file);
-					if (res.success) {
+					try {
+						const res = await profileService.updateCompanyLogo(file);
+						if (!res.success) throw new Error(res.error);
+
 						setAvatar(res.data.avatar);
+					} catch (error) {
+						if (error instanceof Error) {
+							addToast(error.message, {
+								appearance: 'error',
+								autoDismiss: true,
+							});
+						}
 					}
 				}
 			},
-			[]
+			[addToast]
 		);
 
 		const handleTriggerSubmit = useCallback(() => {

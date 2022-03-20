@@ -11,6 +11,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { initialErrors, initialValues, validateForm } from './validations';
 
 export const BasicInfoForm = memo(() => {
@@ -21,6 +22,7 @@ export const BasicInfoForm = memo(() => {
 		isEditable,
 	} = useProfileStore();
 	const formRef = useRef<HTMLFormElement>(null);
+	const { addToast } = useToasts();
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
 	const handleModalClose = useCallback(() => setIsModalOpen(false), []);
@@ -33,17 +35,31 @@ export const BasicInfoForm = memo(() => {
 		}
 	}, []);
 
-	const handleFormSubmit = async (data: typeof initialValues) => {
-		if (data) {
-			setIsLoading(true);
-			const res = await profileService.updateProfile(data);
-			if (res.success) {
-				profileStore.setUser((prev) => ({ ...prev, ...res.data }));
-				handleModalClose();
+	const handleFormSubmit = useCallback(
+		async (data: typeof initialValues) => {
+			if (data) {
+				setIsLoading(true);
+				try {
+					const res = await profileService.updateProfile(data);
+					if (!res.success) throw new Error(res.error);
+
+					addToast('Profile updated', {
+						appearance: 'success',
+						autoDismiss: true,
+					});
+					profileStore.setUser((prev) => ({ ...prev, ...res.data }));
+					handleModalClose();
+				} catch (error) {
+					if (error instanceof Error) {
+						addToast(error.message, { appearance: 'error', autoDismiss: true });
+					}
+				} finally {
+					setIsLoading(false);
+				}
 			}
-			setIsLoading(false);
-		}
-	};
+		},
+		[addToast, handleModalClose]
+	);
 
 	const { values, setValues, errors, handleChange, handleSubmit } = useForm({
 		initialValues,

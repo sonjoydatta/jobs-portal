@@ -4,6 +4,7 @@ import SolidSVG, { IconPlus } from '@/libs/SolidSVG';
 import { profileStore, useProfileStore } from '@/store';
 import { sortByDate } from '@/utils/helpers';
 import { FC, memo, useCallback, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { OrganisationForm } from './OrganisationForm';
 import { Organisations } from './Organisations';
 
@@ -11,23 +12,41 @@ export const Experience: FC = memo(() => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const { isEditable } = useProfileStore();
+	const { addToast } = useToasts();
 
 	const handleModalOpen = useCallback(() => setIsModalOpen(true), []);
 	const handleModalClose = useCallback(() => setIsModalOpen(false), []);
 
-	const handleFormSubmit = useCallback(async (item: IAPI.ExperiencePayload) => {
-		if (item) {
-			setIsLoading(true);
-			const res = await profileService.addExperience(item);
-			if (res.success) {
-				profileStore.setExperiences((prev) =>
-					[...prev, res.data].sort((a, b) => sortByDate(b.to, a.to))
-				);
-				setIsModalOpen(false);
+	const handleFormSubmit = useCallback(
+		async (item: IAPI.ExperiencePayload) => {
+			if (item) {
+				setIsLoading(true);
+				try {
+					const res = await profileService.addExperience(item);
+					if (!res.success) throw new Error(res.error);
+
+					addToast('Experience added', {
+						appearance: 'success',
+						autoDismiss: true,
+					});
+					profileStore.setExperiences((prev) =>
+						[...prev, res.data].sort((a, b) => sortByDate(b.to, a.to))
+					);
+					handleModalClose();
+				} catch (error) {
+					if (error instanceof Error) {
+						addToast(error.message, {
+							appearance: 'error',
+							autoDismiss: true,
+						});
+					}
+				} finally {
+					setIsLoading(false);
+				}
 			}
-			setIsLoading(false);
-		}
-	}, []);
+		},
+		[addToast, handleModalClose]
+	);
 
 	return (
 		<Card>

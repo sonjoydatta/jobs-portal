@@ -3,7 +3,7 @@ import type { AppContext, AppProps as NextAppProps } from 'next/app';
 import App from 'next/app';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import { Fragment } from 'react';
+import { ToastProvider } from 'react-toast-notifications';
 import '../styles/app.scss';
 
 type AppProps = {
@@ -21,12 +21,12 @@ const MyApp = ({
 	profileStore.hydrate(hydratedProfileStore);
 
 	return (
-		<Fragment>
+		<ToastProvider>
 			<Head>
 				<title>Glints Jobs Portal</title>
 			</Head>
 			<Component {...pageProps} />
-		</Fragment>
+		</ToastProvider>
 	);
 };
 
