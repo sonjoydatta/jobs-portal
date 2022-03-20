@@ -12,14 +12,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		if (req.method !== 'GET')
-			throw new BadRequestException('Request method is required');
+			throw new BadRequestException('Method not allowed');
 
 		const id = req.query.id;
 		if (!id || Array.isArray(id))
 			throw new BadRequestException('Id is required');
 
-		const model = await getModel(UserModel);
-		const user = await model.findOne(id);
+		const userModel = await getModel(UserModel);
+		const user = await userModel.findOne(id);
 		if (!user) throw new NotFoundException('User not found');
 
 		if (!user.isPublic)
@@ -28,8 +28,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			);
 		const { password, ...restUser } = user;
 
-		const model1 = await getModel(ExperienceModel);
-		const experiences = await model1.findAllByUserId(id);
+		const expModel = await getModel(ExperienceModel);
+		const experiences = await expModel.findAllByUserId(id);
 		const data = experiences.sort((a, b) => sortByDate(b.to, a.to));
 
 		res.status(200).json({

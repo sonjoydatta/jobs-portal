@@ -35,10 +35,13 @@ export const getJWTId = async (req: NextApiRequest) => {
 	const authorization = req.headers.authorization;
 	if (!authorization) throw new UnauthorizedException('User not authorized');
 
-	const { id } = await verifyJWT(authorization);
-	if (!id) {
+	try {
+		const { id } = await verifyJWT(authorization);
+		if (!id) {
+			throw new UnauthorizedException('User not authorized');
+		}
+		return id;
+	} catch (error) {
 		throw new UnauthorizedException('User not authorized');
 	}
-
-	return id;
 };

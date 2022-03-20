@@ -23,5 +23,5 @@ class AuthService {
 	}
 }
 
-const httpInstance = new HttpService(client.apiURL!);
+const httpInstance = new HttpService(client.apiURL);
 export const authService = new AuthService(httpInstance);

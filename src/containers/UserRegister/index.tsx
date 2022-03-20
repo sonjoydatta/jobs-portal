@@ -4,7 +4,6 @@ import { useForm } from '@/libs/hooks';
 import { authStore } from '@/store';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { setCookie } from 'nookies';
 import { useState } from 'react';
 import { SignInContainer } from '../UserSignIn/styles';
 import { initialErrors, initialValues, validateForm } from './validations';
@@ -12,7 +11,7 @@ import { initialErrors, initialValues, validateForm } from './validations';
 export const UserRegister = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
-	const [gError, setGError] = useState('');
+	const [commonError, setCommonError] = useState('');
 
 	const handleFormSubmit = async (payload: IAPI.RegisterPayload) => {
 		if (payload) {
@@ -24,16 +23,13 @@ export const UserRegister = () => {
 				}
 
 				const { token } = res.data;
-				setCookie(null, 'token', token, {
-					maxAge: 7 * 24 * 60 * 60,
-					path: '/',
-				});
 				authStore.setState({ isLoggedIn: true, accessToken: token });
 				router.push('/dashboard/profile');
 			} catch (error) {
+				if (error instanceof Error) {
+					setCommonError(error.message);
+				}
 				setIsLoading(false);
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				setGError((error as any).message);
 			}
 		}
 	};
@@ -51,7 +47,7 @@ export const UserRegister = () => {
 				<Card.Header style={{ marginBottom: '1rem' }}>
 					<Card.Title>Create a new account</Card.Title>
 				</Card.Header>
-				{gError && <p style={{ color: 'red' }}>{gError}</p>}
+				{commonError && <p style={{ color: 'red' }}>{commonError}</p>}
 				<form onSubmit={handleSubmit}>
 					<Form.Item
 						labelProps={{

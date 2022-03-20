@@ -12,31 +12,21 @@ import { getUserWithJWT } from './login';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		if (req.method !== 'POST') {
+		if (req.method !== 'POST')
 			throw new InvalidMethodException('Method not allowed');
-		}
 
-		if (!req.body.name) {
-			throw new BadRequestException('Name is required');
-		}
+		if (!req.body.name) throw new BadRequestException('Name is required');
 
-		if (!req.body.age) {
-			throw new BadRequestException('Age is required');
-		}
+		if (!req.body.age) throw new BadRequestException('Age is required');
 
-		if (!req.body.email) {
-			throw new BadRequestException('Email is required');
-		}
+		if (!req.body.email) throw new BadRequestException('Email is required');
 
-		if (!req.body.password) {
+		if (!req.body.password)
 			throw new BadRequestException('Password is required');
-		}
 
 		const model = await getModel(UserModel);
 		const user = await model.findOneByEmail(req.body.email);
-		if (user) {
-			throw new BadRequestException('User already exists');
-		}
+		if (user) throw new BadRequestException('User already exists');
 
 		const password = await encryptPassword(req.body.password);
 		const newUser = await model.create({
@@ -45,9 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			email: req.body.email,
 			password,
 		});
-		if (!newUser) {
-			throw new BadRequestException('Something went wrong');
-		}
+		if (!newUser) throw new BadRequestException('Something went wrong');
 
 		const data = await getUserWithJWT(newUser);
 		setCookie({ res }, 'token', data.token, {

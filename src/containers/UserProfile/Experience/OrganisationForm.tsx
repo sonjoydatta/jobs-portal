@@ -123,6 +123,7 @@ export const OrganisationForm: FC<OrganisationFormProps> = memo(
 							inputProps={{
 								type: 'file',
 								name: 'avatar',
+								accept: 'image/*',
 								onChange: handleAvatarChange,
 							}}
 						/>

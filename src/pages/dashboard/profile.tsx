@@ -1,10 +1,42 @@
+import { Button } from '@/components';
 import { UserProfile } from '@/containers';
 import { withAuth } from '@/HOC/withAuth';
 import { profileService } from '@/libs/api';
 import { profileStore } from '@/store';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Fragment, useCallback } from 'react';
 
-const Profile: NextPage = () => <UserProfile />;
+const Profile: NextPage = () => {
+	const router = useRouter();
+
+	const handleSignout = useCallback(async () => {
+		const res = await profileService.logout();
+		if (res.success) {
+			profileStore.destroy();
+			router.push('/');
+		}
+	}, [router]);
+
+	return (
+		<Fragment>
+			<Button
+				size='sm'
+				variant='primary'
+				rounded='pill'
+				style={{
+					position: 'absolute',
+					top: '10px',
+					right: '10px',
+				}}
+				onClick={handleSignout}
+			>
+				Sign out
+			</Button>
+			<UserProfile />
+		</Fragment>
+	);
+};
 
 Profile.getInitialProps = async () => {
 	const promise1 = profileService.getProfile();

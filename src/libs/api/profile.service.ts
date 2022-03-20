@@ -1,5 +1,6 @@
 import { client } from '@/config/client';
 import { authStore } from '@/store/auth.store';
+import { destroySession } from '@/utils/auth/destroySession';
 import {
 	ExperiencePayload,
 	ExperienceResponce,
@@ -54,10 +55,8 @@ class ProfileService {
 	}
 }
 
-const httpInstance = new HttpService(client.apiURL!, {
+const httpInstance = new HttpService(client.apiURL, {
 	getToken: () => authStore.getState().accessToken,
-	onUnauthorized: () => {
-		authStore.setState({ accessToken: '', isLoggedIn: false });
-	},
+	onUnauthorized: destroySession,
 });
 export const profileService = new ProfileService(httpInstance);

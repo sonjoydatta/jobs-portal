@@ -19,28 +19,20 @@ export const getUserWithJWT = async (user: WithId<UserEntity>) => {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		if (req.method !== 'POST') {
+		if (req.method !== 'POST')
 			throw new InvalidMethodException('Method not allowed');
-		}
 
-		if (!req.body.email) {
-			throw new BadRequestException('Email is required');
-		}
+		if (!req.body.email) throw new BadRequestException('Email is required');
 
-		if (!req.body.password) {
+		if (!req.body.password)
 			throw new BadRequestException('Password is required');
-		}
 
 		const model = await getModel(UserModel);
 		const user = await model.findOneByEmail(req.body.email);
-		if (!user) {
-			throw new NotFoundException('User not found');
-		}
+		if (!user) throw new NotFoundException('Email or password is invalid');
 
 		const isValid = await comparePassword(req.body.password, user.password);
-		if (!isValid) {
-			throw new BadRequestException('Password is invalid');
-		}
+		if (!isValid) throw new NotFoundException('Email or password is invalid');
 
 		const data = await getUserWithJWT(user);
 		setCookie({ res }, 'token', data.token, {

@@ -1,67 +1,20 @@
-import { Avatar, Card } from '@/components';
-import { profileService } from '@/libs/api';
-import { profileStore, useProfileStore } from '@/store';
-import { defaultTextAvatar } from '@/utils/helpers';
-import { ChangeEvent, FC, memo, useCallback, useMemo, useRef } from 'react';
-import { InitialsAvatar } from '../styles';
+import { Card } from '@/components';
+import { useProfileStore } from '@/store';
+import { FC, memo } from 'react';
 import { BasicInfoForm } from './BasicInfoForm';
+import { ProfilePhoto } from './ProfilePhoto';
 import { PublicButton } from './PublicButton';
 import { CardHeader } from './styles';
 
 export const Header: FC = memo(() => {
-	const inputRef = useRef<HTMLInputElement>(null);
 	const {
-		user: { name, age, avatar },
-		isEditable,
+		user: { name, age },
 	} = useProfileStore();
-
-	const handleTriggerAvatarClick = useCallback(() => {
-		if (inputRef.current) {
-			inputRef.current.click();
-		}
-	}, []);
-
-	const handleUploadAvatar = useCallback(
-		async (e: ChangeEvent<HTMLInputElement>) => {
-			if (e.target.files && e.target.files[0]) {
-				const img = e.target.files[0];
-				if (img) {
-					const res = await profileService.updateProfileAvatar(img);
-					if (res.success) {
-						profileStore.setUser(res.data);
-					}
-				}
-			}
-		},
-		[]
-	);
-
-	const imageComponent = useMemo(() => {
-		if (avatar?.includes('http')) return <img src={avatar} alt={name} />;
-
-		return (
-			<InitialsAvatar name={name}>{defaultTextAvatar(name)}</InitialsAvatar>
-		);
-	}, [avatar, name]);
 
 	return (
 		<CardHeader style={{ position: 'relative' }}>
 			<div className='content'>
-				<Avatar
-					className={isEditable ? 'content-avatar' : ''}
-					size='xl'
-					onClick={handleTriggerAvatarClick}
-				>
-					{imageComponent}
-					{isEditable && (
-						<input
-							ref={inputRef}
-							type='file'
-							style={{ display: 'none' }}
-							onChange={handleUploadAvatar}
-						/>
-					)}
-				</Avatar>
+				<ProfilePhoto />
 				<Card.Title className='content-title'>{name}</Card.Title>
 				<p className='content-subtitle'>Age: {age}</p>
 			</div>
