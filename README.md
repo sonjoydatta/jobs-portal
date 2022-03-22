@@ -49,6 +49,12 @@ For start the application in production mode, run the following command:
 yarn build && yarn start
 ```
 
+For testing the application, run the following command:
+
+```shell
+yarn test
+```
+
 ## Setup
 
 ```shell

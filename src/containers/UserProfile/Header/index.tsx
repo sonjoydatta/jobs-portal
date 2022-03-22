@@ -15,8 +15,15 @@ export const Header: FC = memo(() => {
 		<CardHeader style={{ position: 'relative' }}>
 			<div className='content'>
 				<ProfilePhoto />
-				<Card.Title className='content-title'>{name}</Card.Title>
-				<p className='content-subtitle'>Age: {age}</p>
+				<Card.Title
+					className='content-title'
+					data-testid='profile-header-title'
+				>
+					{name}
+				</Card.Title>
+				<p className='content-subtitle' data-testid='profile-header-subtitle'>
+					Age: {age}
+				</p>
 			</div>
 			<PublicButton />
 			<BasicInfoForm />

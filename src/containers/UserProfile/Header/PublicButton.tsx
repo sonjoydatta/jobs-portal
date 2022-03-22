@@ -43,6 +43,7 @@ export const PublicButton: FC = () => {
 					className='action-button-public'
 					rounded='circle'
 					variant='link'
+					data-testid='profile-public-button'
 					onClick={handleClick}
 				>
 					Mark as {isPublic ? 'private' : 'public'}
@@ -53,6 +54,7 @@ export const PublicButton: FC = () => {
 					type='text'
 					className='public-url'
 					value={`${baseURL}/public/${_id}`}
+					data-testid='profile-public-url'
 					readOnly
 				/>
 			)}

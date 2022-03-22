@@ -11,5 +11,19 @@
 				"preprocess": false
 			}
 		]
-	]
+	],
+	"env": {
+		"production": {
+			"plugins": [
+				[
+					"react-remove-properties",
+					{
+						"properties": [
+							"data-testid"
+						]
+					}
+				]
+			]
+		}
+	}
 }

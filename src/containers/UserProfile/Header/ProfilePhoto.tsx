@@ -53,10 +53,13 @@ export const ProfilePhoto: FC = () => {
 	);
 
 	const imageComponent = useMemo(() => {
-		if (avatar?.includes('http')) return <img src={avatar} alt={name} />;
+		if (avatar?.includes('http'))
+			return <img src={avatar} alt={name} data-testid='profile-photo' />;
 
 		return (
-			<InitialsAvatar name={name}>{defaultTextAvatar(name)}</InitialsAvatar>
+			<InitialsAvatar name={name} data-testid='profile-avatar'>
+				{defaultTextAvatar(name)}
+			</InitialsAvatar>
 		);
 	}, [avatar, name]);
 
@@ -73,6 +76,7 @@ export const ProfilePhoto: FC = () => {
 				type='file'
 				accept='image/*'
 				style={{ display: 'none' }}
+				data-testid='profile-photo-input'
 				onChange={handleUpload}
 			/>
 		</ProfileAvatar>

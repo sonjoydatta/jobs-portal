@@ -49,6 +49,7 @@
 		"@types/styled-components": "^5.1.24",
 		"@typescript-eslint/eslint-plugin": "^5.14.0",
 		"@typescript-eslint/parser": "^5.14.0",
+		"babel-plugin-react-remove-properties": "^0.3.0",
 		"babel-plugin-styled-components": "^2.0.6",
 		"eslint": "^8.10.0",
 		"eslint-config-next": "^12.1.0",
